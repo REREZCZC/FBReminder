@@ -1,0 +1,6 @@
+framework module Pods_FBReminder {
+  umbrella header "Pods-FBReminder-umbrella.h"
+
+  export *
+  module * { export * }
+}
