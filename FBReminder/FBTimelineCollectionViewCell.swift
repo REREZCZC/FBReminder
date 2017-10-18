@@ -28,6 +28,15 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    var cellModel : FBTimelineModel? {
+        didSet {
+            gameInfo.text = cellModel?.title
+            timeInfo.text = cellModel?.time
+            homeTeamTitle.text = cellModel?.date
+        }
+    }
+    
 }
 extension FBTimelineCollectionViewCell {
     fileprivate func setupUI(){
@@ -95,6 +104,9 @@ extension FBTimelineCollectionViewCell {
 }
 
 
+extension FBTimelineCollectionViewCell {
+    
+}
 
 
 

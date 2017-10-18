@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FBTimelineModel: BaseModel {
+class FBTimelineModel {
     var title : String = ""
     var date : String = ""
     var time : String = ""

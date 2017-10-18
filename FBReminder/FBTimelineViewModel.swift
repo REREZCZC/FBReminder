@@ -9,6 +9,7 @@
 
 import UIKit
 import SwiftyJSON
+import MJExtension
 
 //first request
 private let englandTimelineURL       = "http://platform.sina.com.cn/sports_all/client_api?_sport_t_=livecast&l_type=4&_sport_a_=typeMatches&__os__=iphone&app_key=2923419926&__version__=3.13.1.1%20HTTP/1.1"
@@ -21,11 +22,11 @@ private let chinaUpdateTimelineURL   = "http://platform.sina.com.cn/sports_all/c
 
 
 class FBTimelineViewModel {
-    
+    lazy var timelineModels = [FBTimelineModel]()
 }
 
 extension FBTimelineViewModel {
-    func loadTimelineData() {
+    func loadTimelineData(finishedCallback : @escaping () -> ()) {
         NetworkTool.requestData(URLString: englandTimelineURL, type: .get) { (result: Any) in
             let result = JSON(result)["result"]
             let previewGameInfo = result["data"]["pre"]
@@ -34,14 +35,16 @@ extension FBTimelineViewModel {
                 let title = previewGameInfo[i]["Title"]
                 let date = previewGameInfo[i]["date"]
                 let time = previewGameInfo[i]["time"]
+            
+                let itemDic : FBTimelineModel = FBTimelineModel()
+                itemDic.title = String(describing: title)
+                itemDic.date = String(describing: date)
+                itemDic.time = String(describing: time)
                 
+                self.timelineModels.append(itemDic)
                 
-                let itemDic = ["Title" : title, "date" : date, "time" : time]
-                
-                timeLineItemArray.add(itemDic)
+                finishedCallback()
             }
-            print(timeLineItemArray.count)
-            self.timelineCVC.reloadData()
         }
     }
 }
