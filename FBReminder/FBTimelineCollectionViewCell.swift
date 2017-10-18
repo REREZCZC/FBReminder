@@ -17,8 +17,10 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
     fileprivate lazy var visitTeamIcon : UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     fileprivate lazy var visitTeamTitle : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     //gameInfo
-    lazy var gameInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+//    lazy var gameInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     lazy var timeInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    
+    lazy var dateInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,9 +33,10 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
     
     var cellModel : FBTimelineModel? {
         didSet {
-            gameInfo.text = cellModel?.title
+            dateInfo.text = cellModel?.date
             timeInfo.text = cellModel?.time
-            homeTeamTitle.text = cellModel?.date
+            homeTeamTitle.text = cellModel?.team1
+            visitTeamTitle.text = cellModel?.team2
         }
     }
     
@@ -49,7 +52,9 @@ extension FBTimelineCollectionViewCell {
             make.top.equalTo(16)
         }
         //homeTeamTitle
-        homeTeamTitle.backgroundColor = UIColor.brown
+//        homeTeamTitle.backgroundColor = UIColor.brown
+        homeTeamTitle.font = UIFont.systemFont(ofSize: 13)
+        homeTeamTitle.textAlignment = .center
         self.addSubview(homeTeamTitle)
         homeTeamTitle.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(80)
@@ -67,7 +72,9 @@ extension FBTimelineCollectionViewCell {
             make.centerY.equalTo(homeTeamIcon.snp.centerY)
         }
         //visitTeamTitle
-        visitTeamTitle.backgroundColor = UIColor.brown
+//        visitTeamTitle.backgroundColor = UIColor.brown
+        visitTeamTitle.font = UIFont.systemFont(ofSize: 13)
+        visitTeamTitle.textAlignment = .center
         self.addSubview(visitTeamTitle)
         visitTeamTitle.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(80)
@@ -76,23 +83,23 @@ extension FBTimelineCollectionViewCell {
             make.centerY.equalTo(homeTeamTitle.snp.centerY)
         }
         
-        //gameInfo
-        gameInfo.backgroundColor = UIColor.gray
-        self.addSubview(gameInfo)
-        gameInfo.snp.makeConstraints { (make) -> Void in
-            make.left.equalTo(homeTeamIcon.snp.right).offset(10)
-            make.right.equalTo(visitTeamIcon.snp.left).offset(-10)
-            make.height.equalTo(18)
-            make.top.equalTo(homeTeamIcon.snp.top).offset(3)
+//        dateInfo.backgroundColor = UIColor.yellow
+        dateInfo.textAlignment = .center
+        dateInfo.font = UIFont.systemFont(ofSize: 16)
+        self.addSubview(dateInfo)
+        dateInfo.snp.makeConstraints { (make)-> Void in
+            make.centerX.equalTo(self.snp.centerX)
+            make.top.equalTo(homeTeamIcon.snp.top).offset(4)
         }
+        
         //timeInfo
-        timeInfo.backgroundColor = UIColor.gray
+//        timeInfo.backgroundColor = UIColor.gray
+        timeInfo.textAlignment = .center
+        timeInfo.font = UIFont.systemFont(ofSize: 15)
         self.addSubview(timeInfo)
         timeInfo.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(gameInfo.snp.width)
-            make.height.equalTo(gameInfo.snp.height)
-            make.centerX.equalTo(gameInfo.snp.centerX)
-            make.bottom.equalTo(homeTeamIcon.snp.bottom).offset(-3)
+            make.centerX.equalTo(dateInfo.snp.centerX)
+            make.bottom.equalTo(homeTeamIcon.snp.bottom).offset(-2)
         }
         
         

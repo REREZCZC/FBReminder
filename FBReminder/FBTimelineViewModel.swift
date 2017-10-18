@@ -30,14 +30,18 @@ extension FBTimelineViewModel {
         NetworkTool.requestData(URLString: englandTimelineURL, type: .get) { (result: Any) in
             let result = JSON(result)["result"]
             let previewGameInfo = result["data"]["pre"]
-            
+            print("\(previewGameInfo)")
             for i in 0...previewGameInfo.count {
-                let title = previewGameInfo[i]["Title"]
                 let date = previewGameInfo[i]["date"]
                 let time = previewGameInfo[i]["time"]
-            
+                
+                let team1 = previewGameInfo[i]["Team1"]
+                let team2 = previewGameInfo[i]["Team2"]
+                
+
                 let itemDic : FBTimelineModel = FBTimelineModel()
-                itemDic.title = String(describing: title)
+                itemDic.team1 = String(describing: team1)
+                itemDic.team2 = String(describing: team2)
                 itemDic.date = String(describing: date)
                 itemDic.time = String(describing: time)
                 

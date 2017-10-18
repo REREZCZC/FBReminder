@@ -9,7 +9,9 @@
 import UIKit
 
 class FBTimelineModel {
-    var title : String = ""
+//    var title : String = ""
+    var team1 : String = ""
+    var team2 : String = ""
     var date : String = ""
     var time : String = ""
 }

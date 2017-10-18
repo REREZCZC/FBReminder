@@ -56,15 +56,13 @@ extension FBTimelineViewController {
 extension FBTimelineViewController {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 400
+        return timelineVM.timelineModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : FBTimelineCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: kTimelineCellID, for: indexPath) as! FBTimelineCollectionViewCell
         
-        
         cell.cellModel = timelineVM.timelineModels[indexPath.item]
-        
         
         return cell
     }
