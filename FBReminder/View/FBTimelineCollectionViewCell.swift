@@ -40,7 +40,7 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
             dateInfo.text = date
             
             //星期
-            weekInfo.text = getDayOFWeek(date)
+//            weekInfo.text = getDayOFWeek(date)
             //时间
             timeInfo.text = cellModel?.time
             homeTeamTitle.text = cellModel?.team1
@@ -70,8 +70,6 @@ extension FBTimelineCollectionViewCell {
         homeTeamTitle.textAlignment = .center
         self.addSubview(homeTeamTitle)
         homeTeamTitle.snp.makeConstraints { (make) -> Void in
-//            make.width.equalTo(80)
-//            make.height.equalTo(18)
             make.centerX.equalTo(homeTeamIcon.snp.centerX)
             make.bottom.equalTo(-10)
         }
@@ -88,8 +86,6 @@ extension FBTimelineCollectionViewCell {
         visitTeamTitle.textAlignment = .center
         self.addSubview(visitTeamTitle)
         visitTeamTitle.snp.makeConstraints { (make) -> Void in
-//            make.width.equalTo(80)
-//            make.height.equalTo(18)
             make.centerX.equalTo(visitTeamIcon.snp.centerX)
             make.centerY.equalTo(homeTeamTitle.snp.centerY)
         }
@@ -132,17 +128,22 @@ extension FBTimelineCollectionViewCell {
 
     fileprivate func getDayOFWeek(_ date : String) -> String {
         
-        let yearEnd = date.index(date.endIndex, offsetBy: -6)
-        let year = date[..<yearEnd]
+        var processData = date
+        if processData.characters.count < 9 {
+            processData = "2017-10-21"
+        }
+        
+        let yearEnd = processData.index(processData.endIndex, offsetBy: -6)
+        let year = processData[..<yearEnd]
         
         
-        let monthStart = date.index(date.startIndex, offsetBy: 5)
-        let monthEnd = date.index(date.endIndex, offsetBy: -3)
+        let monthStart = processData.index(processData.startIndex, offsetBy: 5)
+        let monthEnd = processData.index(date.endIndex, offsetBy: -3)
         let monthRange = Range<String.Index>(uncheckedBounds: (lower: monthStart, upper: monthEnd))
-        let month = date[monthRange]
+        let month = processData[monthRange]
         
-        let dayStart = date.index(date.startIndex, offsetBy: 8)
-        let day = date[dayStart...]
+        let dayStart = processData.index(processData.startIndex, offsetBy: 8)
+        let day = processData[dayStart...]
         
         var y = Int(year)!
         let m = Int(month)!

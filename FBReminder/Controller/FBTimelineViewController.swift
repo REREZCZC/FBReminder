@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-
+import PullToRefreshKit
 
 private let kTimelineCellID = "kTimelineCellID"
 private let kBoundsWidth = "self.view.bounds.width"
@@ -49,13 +49,26 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
 extension FBTimelineViewController {
     fileprivate func setupUI() {
         view.addSubview(timelineCVC)
+        //添加上拉刷新
+        timelineCVC.setUpFooterRefresh {
+            
+//            self.timelineVM.loadTimelineData {
+//                self.timelineCVC.endFooterRefreshing()
+//                self.timelineCVC.reloadData()
+//            }
+            self.timelineVM.loadTimelineData(preDate: self.timelineVM.preDataBegin, finishedCallback: {
+                self.timelineCVC.endFooterRefreshing()
+                self.timelineCVC.reloadData()
+            })
+            
+        }
     }
 }
 
 extension FBTimelineViewController {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return timelineVM.timelineModels.count - 1
+        return timelineVM.timelineModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -71,7 +84,10 @@ extension FBTimelineViewController {
 //获得数据
 extension FBTimelineViewController {
     fileprivate func loadData() {
-        timelineVM.loadTimelineData {
+//        timelineVM.loadTimelineData {
+//            self.timelineCVC.reloadData()
+//        }
+        timelineVM.loadTimelineData(preDate: "") {
             self.timelineCVC.reloadData()
         }
     }
