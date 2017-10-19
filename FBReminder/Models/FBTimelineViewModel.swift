@@ -53,6 +53,8 @@ extension FBTimelineViewModel {
                 let itemDic : FBTimelineModel = FBTimelineModel()
                 itemDic.team1 = String(describing: team1)
                 itemDic.team2 = String(describing: team2)
+                itemDic.team1IconUrl = String(describing: team1IconUrl)
+                itemDic.team2IconUrl = String(describing: team2IconUrl)
                 itemDic.date = String(describing: date)
                 itemDic.time = String(describing: time)
                 

@@ -29,7 +29,6 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
         
         
        let timelineCVC = UICollectionView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height), collectionViewLayout: layout)
-//        self.view.addSubview(timelineCVC)
         timelineCVC.delegate = self
         timelineCVC.dataSource = self
         timelineCVC.backgroundColor = UIColor.white
@@ -56,7 +55,7 @@ extension FBTimelineViewController {
 extension FBTimelineViewController {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return timelineVM.timelineModels.count
+        return timelineVM.timelineModels.count - 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

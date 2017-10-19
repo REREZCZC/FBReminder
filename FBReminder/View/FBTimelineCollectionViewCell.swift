@@ -8,18 +8,20 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class FBTimelineCollectionViewCell: UICollectionViewCell {
     //home
-    fileprivate lazy var homeTeamIcon : UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    fileprivate lazy var homeTeamIcon : UIImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     fileprivate lazy var homeTeamTitle : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     //visit
-    fileprivate lazy var visitTeamIcon : UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    fileprivate lazy var visitTeamIcon : UIImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     fileprivate lazy var visitTeamTitle : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     //gameInfo
     lazy var timeInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    
     lazy var dateInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    lazy var weekInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,10 +34,24 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
     
     var cellModel : FBTimelineModel? {
         didSet {
-            dateInfo.text = cellModel?.date
+            //日期
+            var date : String = String()
+            date = (cellModel?.date)!
+            dateInfo.text = date
+            
+            //星期
+            weekInfo.text = getDayOFWeek(date)
+            //时间
             timeInfo.text = cellModel?.time
             homeTeamTitle.text = cellModel?.team1
             visitTeamTitle.text = cellModel?.team2
+            
+            //使用 kingfisher 设置主客队图标
+            let homeTeamURL = URL(string: (cellModel!.team1IconUrl))
+            homeTeamIcon.kf.setImage(with: homeTeamURL)
+            
+            let visitTeamURL = URL(string: (cellModel!.team2IconUrl))
+            visitTeamIcon.kf.setImage(with: visitTeamURL)
         }
     }
     
@@ -43,7 +59,6 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
 extension FBTimelineCollectionViewCell {
     fileprivate func setupUI(){
         //homeTeamIcon
-        homeTeamIcon.backgroundColor = UIColor.green
         self.addSubview(homeTeamIcon)
         homeTeamIcon.snp.makeConstraints { (make) -> Void in
             make.width.height.equalTo(50)
@@ -55,14 +70,13 @@ extension FBTimelineCollectionViewCell {
         homeTeamTitle.textAlignment = .center
         self.addSubview(homeTeamTitle)
         homeTeamTitle.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(80)
-            make.height.equalTo(18)
+//            make.width.equalTo(80)
+//            make.height.equalTo(18)
             make.centerX.equalTo(homeTeamIcon.snp.centerX)
-            make.top.equalTo(homeTeamIcon.snp.bottom).offset(8)
+            make.bottom.equalTo(-10)
         }
         
         //visitTeamIcon
-        visitTeamIcon.backgroundColor = UIColor.green
         self.addSubview(visitTeamIcon)
         visitTeamIcon.snp.makeConstraints { (make) -> Void in
             make.width.height.equalTo(50)
@@ -70,36 +84,44 @@ extension FBTimelineCollectionViewCell {
             make.centerY.equalTo(homeTeamIcon.snp.centerY)
         }
         //visitTeamTitle
-        visitTeamTitle.font = UIFont.systemFont(ofSize: 13)
+        visitTeamTitle.font = UIFont.systemFont(ofSize: 14)
         visitTeamTitle.textAlignment = .center
         self.addSubview(visitTeamTitle)
         visitTeamTitle.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(80)
-            make.height.equalTo(18)
+//            make.width.equalTo(80)
+//            make.height.equalTo(18)
             make.centerX.equalTo(visitTeamIcon.snp.centerX)
             make.centerY.equalTo(homeTeamTitle.snp.centerY)
         }
         
+        //timeInfo
+        timeInfo.textAlignment = .center
+        timeInfo.font = UIFont.systemFont(ofSize: 13)
+        self.addSubview(timeInfo)
+        timeInfo.snp.makeConstraints { (make) -> Void in
+            make.centerX.equalTo(self.snp.centerX)
+            make.centerY.equalTo(self.snp.centerY)
+        }
+        
         dateInfo.textAlignment = .center
-        dateInfo.font = UIFont.systemFont(ofSize: 16)
+        dateInfo.font = UIFont.systemFont(ofSize: 13)
         self.addSubview(dateInfo)
         dateInfo.snp.makeConstraints { (make)-> Void in
             make.centerX.equalTo(self.snp.centerX)
-            make.top.equalTo(homeTeamIcon.snp.top).offset(4)
+            make.bottom.equalTo(timeInfo.snp.top).offset(-2)
         }
         
-        //timeInfo
-        timeInfo.textAlignment = .center
-        timeInfo.font = UIFont.systemFont(ofSize: 15)
-        self.addSubview(timeInfo)
-        timeInfo.snp.makeConstraints { (make) -> Void in
-            make.centerX.equalTo(dateInfo.snp.centerX)
-            make.bottom.equalTo(homeTeamIcon.snp.bottom).offset(-2)
+        weekInfo.textAlignment = .center
+        weekInfo.font = UIFont.systemFont(ofSize: 13)
+        self.addSubview(weekInfo)
+        weekInfo.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(timeInfo.snp.bottom).offset(2)
+            make.centerX.equalTo(self.snp.centerX)
         }
-        
         
         self.backgroundColor = UIColor.orange
         self.layer.cornerRadius = 8
+        
         
         
     }
@@ -107,7 +129,80 @@ extension FBTimelineCollectionViewCell {
 
 
 extension FBTimelineCollectionViewCell {
+
+    fileprivate func getDayOFWeek(_ date : String) -> String {
+        
+        let yearEnd = date.index(date.endIndex, offsetBy: -6)
+        let year = date[..<yearEnd]
+        
+        
+        let monthStart = date.index(date.startIndex, offsetBy: 5)
+        let monthEnd = date.index(date.endIndex, offsetBy: -3)
+        let monthRange = Range<String.Index>(uncheckedBounds: (lower: monthStart, upper: monthEnd))
+        let month = date[monthRange]
+        
+        let dayStart = date.index(date.startIndex, offsetBy: 8)
+        let day = date[dayStart...]
+        
+        var y = Int(year)!
+        let m = Int(month)!
+        let d = Int(day)!
+        
+        if (m < 3) {
+            y -= 1
+        }
+        let c = y / 100
+        let g = y % 100
+        
+        let monthTable = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]
+        let e = monthTable[m - 1]
+        
+        let centuryTable = [0, 5, 3, 1]
+        let f = centuryTable[c % 4]
+        
+        let h = (d + e + f + g + g/4) % 7
+//        return (h + 6) % 7 + 1
+        
+        let weekNumber = (h + 6) % 7 + 1
+        switch weekNumber {
+        case 1 :
+            return "星期一"
+        case 2 :
+            return "星期二"
+        case 3 :
+            return "星期三"
+        case 4 :
+            return "星期四"
+        case 5 :
+            return "星期五"
+        case 6 :
+            return "星期六"
+        case 7 :
+            return "星期日"
+        default :
+            return "其他"
+        }
+        
+    }
+//    public func dayOfWeek3(_ y: Int, _ m: Int, _ d: Int) -> Int {
+//        var y = y
+//        if (m < 3) {
+//            y -= 1
+//        }
+//        let c = y / 100
+//        let g = y % 100
+//
+//        let monthTable = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]
+//        let e = monthTable[m - 1]
+//
+//        let centuryTable = [0, 5, 3, 1]
+//        let f = centuryTable[c % 4]
+//
+//        let h = (d + e + f + g + g/4) % 7
+//        return (h + 6) % 7 + 1
+//    }
     
+
 }
 
 
