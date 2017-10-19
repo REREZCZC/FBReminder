@@ -6,7 +6,6 @@ target 'FBReminder' do
   use_frameworks!
 pod 'Alamofire', '~> 4.5.1'
   # Pods for FBRemin
-pod 'CRRefresh', '~> 1.0.5'
 pod 'Kingfisher', '~> 4.1.1'
 pod 'SwiftyJSON'
 pod 'MJExtension', '~> 3.0.13'
