@@ -17,7 +17,6 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
     fileprivate lazy var visitTeamIcon : UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     fileprivate lazy var visitTeamTitle : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     //gameInfo
-//    lazy var gameInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     lazy var timeInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
     lazy var dateInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -52,7 +51,6 @@ extension FBTimelineCollectionViewCell {
             make.top.equalTo(16)
         }
         //homeTeamTitle
-//        homeTeamTitle.backgroundColor = UIColor.brown
         homeTeamTitle.font = UIFont.systemFont(ofSize: 13)
         homeTeamTitle.textAlignment = .center
         self.addSubview(homeTeamTitle)
@@ -72,7 +70,6 @@ extension FBTimelineCollectionViewCell {
             make.centerY.equalTo(homeTeamIcon.snp.centerY)
         }
         //visitTeamTitle
-//        visitTeamTitle.backgroundColor = UIColor.brown
         visitTeamTitle.font = UIFont.systemFont(ofSize: 13)
         visitTeamTitle.textAlignment = .center
         self.addSubview(visitTeamTitle)
@@ -83,7 +80,6 @@ extension FBTimelineCollectionViewCell {
             make.centerY.equalTo(homeTeamTitle.snp.centerY)
         }
         
-//        dateInfo.backgroundColor = UIColor.yellow
         dateInfo.textAlignment = .center
         dateInfo.font = UIFont.systemFont(ofSize: 16)
         self.addSubview(dateInfo)
@@ -93,7 +89,6 @@ extension FBTimelineCollectionViewCell {
         }
         
         //timeInfo
-//        timeInfo.backgroundColor = UIColor.gray
         timeInfo.textAlignment = .center
         timeInfo.font = UIFont.systemFont(ofSize: 15)
         self.addSubview(timeInfo)
