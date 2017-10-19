@@ -69,6 +69,40 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		4C4AB23D1F9847AB009EF9D3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4C67E86F1F8DFB250062811D /* FBTimelineViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4C4AB23E1F9847D4009EF9D3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4C67E8711F8E0D040062811D /* FBTimelineCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4C4AB23F1F9847E2009EF9D3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4C24B9F31F95F8F90085D40A /* FBTimelineViewModel.swift */,
+				4C24B9F71F95FE6B0085D40A /* FBTimelineModel.swift */,
+				4C24B9F91F9600030085D40A /* BaseModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4C4AB2401F9847F6009EF9D3 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				4C24B9F11F95A8B90085D40A /* NetworkTool.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		4C67E84D1F8DF5910062811D = {
 			isa = PBXGroup;
 			children = (
@@ -90,13 +124,11 @@
 		4C67E8581F8DF5910062811D /* FBReminder */ = {
 			isa = PBXGroup;
 			children = (
+				4C4AB2401F9847F6009EF9D3 /* Other */,
+				4C4AB23F1F9847E2009EF9D3 /* Models */,
+				4C4AB23E1F9847D4009EF9D3 /* View */,
+				4C4AB23D1F9847AB009EF9D3 /* Controller */,
 				4C67E8591F8DF5910062811D /* AppDelegate.swift */,
-				4C67E86F1F8DFB250062811D /* FBTimelineViewController.swift */,
-				4C67E8711F8E0D040062811D /* FBTimelineCollectionViewCell.swift */,
-				4C24B9F31F95F8F90085D40A /* FBTimelineViewModel.swift */,
-				4C24B9F71F95FE6B0085D40A /* FBTimelineModel.swift */,
-				4C24B9F91F9600030085D40A /* BaseModel.swift */,
-				4C24B9F11F95A8B90085D40A /* NetworkTool.swift */,
 				4C67E85D1F8DF5910062811D /* Main.storyboard */,
 				4C67E8601F8DF5910062811D /* Assets.xcassets */,
 				4C67E8621F8DF5910062811D /* LaunchScreen.storyboard */,
