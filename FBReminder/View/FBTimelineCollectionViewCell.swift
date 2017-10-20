@@ -40,7 +40,7 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
             dateInfo.text = date
             
             //星期
-//            weekInfo.text = getDayOFWeek(date)
+            weekInfo.text = getDayOFWeek(date)
             //时间
             timeInfo.text = cellModel?.time
             homeTeamTitle.text = cellModel?.team1
@@ -92,7 +92,8 @@ extension FBTimelineCollectionViewCell {
         
         //timeInfo
         timeInfo.textAlignment = .center
-        timeInfo.font = UIFont.systemFont(ofSize: 13)
+        timeInfo.textColor = UIColor.white
+        timeInfo.font = UIFont.systemFont(ofSize: 14)
         self.addSubview(timeInfo)
         timeInfo.snp.makeConstraints { (make) -> Void in
             make.centerX.equalTo(self.snp.centerX)
@@ -100,7 +101,8 @@ extension FBTimelineCollectionViewCell {
         }
         
         dateInfo.textAlignment = .center
-        dateInfo.font = UIFont.systemFont(ofSize: 13)
+        dateInfo.font = UIFont.systemFont(ofSize: 14)
+        dateInfo.textColor = UIColor.white
         self.addSubview(dateInfo)
         dateInfo.snp.makeConstraints { (make)-> Void in
             make.centerX.equalTo(self.snp.centerX)
@@ -108,7 +110,8 @@ extension FBTimelineCollectionViewCell {
         }
         
         weekInfo.textAlignment = .center
-        weekInfo.font = UIFont.systemFont(ofSize: 13)
+        weekInfo.font = UIFont.systemFont(ofSize: 14)
+        weekInfo.textColor = UIColor.white
         self.addSubview(weekInfo)
         weekInfo.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(timeInfo.snp.bottom).offset(2)

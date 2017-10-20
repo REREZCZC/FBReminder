@@ -61,7 +61,6 @@ extension FBTimelineViewModel {
                 //客队图标
                 let team2IconUrl = previewGameInfo[i]["Flag2"]
                 
-                print(team1)
                 
                 let itemDic : FBTimelineModel = FBTimelineModel()
                 itemDic.team1 = String(describing: team1)

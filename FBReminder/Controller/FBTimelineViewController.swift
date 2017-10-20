@@ -51,11 +51,7 @@ extension FBTimelineViewController {
         view.addSubview(timelineCVC)
         //添加上拉刷新
         timelineCVC.setUpFooterRefresh {
-            
-//            self.timelineVM.loadTimelineData {
-//                self.timelineCVC.endFooterRefreshing()
-//                self.timelineCVC.reloadData()
-//            }
+
             self.timelineVM.loadTimelineData(preDate: self.timelineVM.preDataBegin, finishedCallback: {
                 self.timelineCVC.endFooterRefreshing()
                 self.timelineCVC.reloadData()
@@ -84,9 +80,7 @@ extension FBTimelineViewController {
 //获得数据
 extension FBTimelineViewController {
     fileprivate func loadData() {
-//        timelineVM.loadTimelineData {
-//            self.timelineCVC.reloadData()
-//        }
+
         timelineVM.loadTimelineData(preDate: "") {
             self.timelineCVC.reloadData()
         }
