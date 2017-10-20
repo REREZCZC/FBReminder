@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -16,11 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         //将 tablelineTableViewController 设置为新的 rootViewController.
         let timelineTVC = FBTimelineViewController()
         self.window?.rootViewController = timelineTVC
         self.window?.makeKeyAndVisible()
+        
+        
         return true
     }
 
