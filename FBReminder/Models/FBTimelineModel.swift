@@ -15,6 +15,7 @@ class FBTimelineModel {
     var team2IconUrl : String = ""
     var date : String = ""
     var time : String = ""
+    var title : String = ""
 }
 
 

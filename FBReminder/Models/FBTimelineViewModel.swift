@@ -61,6 +61,7 @@ extension FBTimelineViewModel {
                 //客队图标
                 let team2IconUrl = previewGameInfo[i]["Flag2"]
                 
+                let title  = previewGameInfo[i]["Title"]
                 
                 let itemDic : FBTimelineModel = FBTimelineModel()
                 itemDic.team1 = String(describing: team1)
@@ -69,6 +70,7 @@ extension FBTimelineViewModel {
                 itemDic.team2IconUrl = String(describing: team2IconUrl)
                 itemDic.date = String(describing: date)
                 itemDic.time = String(describing: time)
+                itemDic.title = String(describing: title)
                 
                 self.timelineModels.append(itemDic)
                 

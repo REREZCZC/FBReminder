@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import PullToRefreshKit
+import EventKit
 
 private let kTimelineCellID = "kTimelineCellID"
 private let kBoundsWidth = "self.view.bounds.width"
@@ -18,7 +19,8 @@ private let kBoundsHeight = "self.view.bounds.height"
 fileprivate var timeLineItemArray : NSMutableArray = NSMutableArray()
 
 class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
+    var savedEventId : String = ""
+    
     fileprivate lazy var timelineVM : FBTimelineViewModel = FBTimelineViewModel()
     fileprivate lazy var timelineCVC : UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
@@ -73,6 +75,14 @@ extension FBTimelineViewController {
         
         return cell
     }
+    
+    //选中方法,
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //保存日历事件
+       let date = combineDate(date: self.timelineVM.timelineModels[indexPath.item].date, time: self.timelineVM.timelineModels[indexPath.item].time)
+//        addEvent(title: self.timelineVM.timelineModels[indexPath.item].team1, startDate: date)
+        addEvent(title: self.timelineVM.timelineModels[indexPath.item].title, startDate: date)
+    }
 
 }
 
@@ -91,6 +101,56 @@ extension FBTimelineViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if timelineCVC.contentOffset.y <= 0 {
            timelineCVC.contentOffset.y = 0
+        }
+    }
+}
+
+//保存日历事件
+extension FBTimelineViewController {
+    
+    //将字符串转成 NSDate 格式
+    func combineDate(date : String, time : String) -> Date {
+        let entireDate = date + time
+        let format : DateFormatter = DateFormatter()
+        format.dateFormat = "yyyy-MM-ddHH:mm"
+        format.timeZone = TimeZone(abbreviation: "CTS")
+        let date : Date = format.date(from: entireDate)!
+        return date
+    }
+    
+    //创建事件
+    func addEvent( title : String, startDate : Date) {
+        let eventStore = EKEventStore()
+        let endDate = startDate.addingTimeInterval(60 * 110)//一场比赛的时间
+        //判断权限
+        if EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized {
+            eventStore.requestAccess(to: .event, completion: { (Bool, Error) in
+                self.createEvent(eventStore: eventStore, title: title, startDate: startDate, endDate: endDate)
+            })
+        }else {
+            createEvent(eventStore: eventStore, title: title, startDate: startDate, endDate: endDate)
+        }
+    }
+    
+    func createEvent(eventStore: EKEventStore, title: String, startDate: Date, endDate: Date) {
+        let event = EKEvent(eventStore: eventStore)
+        
+        event.title = title
+        event.startDate = startDate
+        event.endDate = endDate
+        event.calendar = eventStore.defaultCalendarForNewEvents
+        
+        let alarmDate = startDate.addingTimeInterval(-60 * 10)
+        let firtstAlarm = EKAlarm(absoluteDate: alarmDate)
+        let secondAlarm = EKAlarm(absoluteDate: startDate)
+        event.addAlarm(firtstAlarm)
+        event.addAlarm(secondAlarm)
+        
+        do {
+            try eventStore.save(event, span: .thisEvent)
+            savedEventId = event.eventIdentifier
+        } catch {
+            print("保存失败")
         }
     }
 }
