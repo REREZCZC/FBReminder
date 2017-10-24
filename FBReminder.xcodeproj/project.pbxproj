@@ -17,6 +17,7 @@
 		4C67E8641F8DF5910062811D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C67E8621F8DF5910062811D /* LaunchScreen.storyboard */; };
 		4C67E8701F8DFB250062811D /* FBTimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C67E86F1F8DFB250062811D /* FBTimelineViewController.swift */; };
 		4C67E8721F8E0D040062811D /* FBTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C67E8711F8E0D040062811D /* FBTimelineCollectionViewCell.swift */; };
+		4CE9A6A11F9F12C200D0B162 /* FBDateBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE9A6A01F9F12C200D0B162 /* FBDateBase.swift */; };
 		DEEAFBEA81E872A2965EA98C /* Pods_FBReminder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD4EE22F91D2D04A8BD7F6A /* Pods_FBReminder.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		4C67E86F1F8DFB250062811D /* FBTimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBTimelineViewController.swift; sourceTree = "<group>"; };
 		4C67E8711F8E0D040062811D /* FBTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		4CC29F411F947D7E004AE707 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CE9A6A01F9F12C200D0B162 /* FBDateBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBDateBase.swift; sourceTree = "<group>"; };
 		CCD4EE22F91D2D04A8BD7F6A /* Pods_FBReminder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FBReminder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC3FBA9F182D9F7EC507E2A /* Pods-FBReminder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FBReminder.release.xcconfig"; path = "Pods/Target Support Files/Pods-FBReminder/Pods-FBReminder.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				4C24B9F11F95A8B90085D40A /* NetworkTool.swift */,
+				4CE9A6A01F9F12C200D0B162 /* FBDateBase.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/PullToRefreshKit/PullToRefreshKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -246,6 +250,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PullToRefreshKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -280,6 +285,7 @@
 				4C24B9F21F95A8B90085D40A /* NetworkTool.swift in Sources */,
 				4C24B9FA1F9600030085D40A /* BaseModel.swift in Sources */,
 				4C67E85A1F8DF5910062811D /* AppDelegate.swift in Sources */,
+				4CE9A6A11F9F12C200D0B162 /* FBDateBase.swift in Sources */,
 				4C67E8701F8DFB250062811D /* FBTimelineViewController.swift in Sources */,
 				4C24B9F81F95FE6B0085D40A /* FBTimelineModel.swift in Sources */,
 				4C67E8721F8E0D040062811D /* FBTimelineCollectionViewCell.swift in Sources */,

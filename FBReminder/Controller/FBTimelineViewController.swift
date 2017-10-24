@@ -80,7 +80,6 @@ extension FBTimelineViewController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //保存日历事件
        let date = combineDate(date: self.timelineVM.timelineModels[indexPath.item].date, time: self.timelineVM.timelineModels[indexPath.item].time)
-//        addEvent(title: self.timelineVM.timelineModels[indexPath.item].team1, startDate: date)
         addEvent(title: self.timelineVM.timelineModels[indexPath.item].title, startDate: date)
     }
 
