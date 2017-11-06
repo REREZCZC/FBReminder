@@ -27,7 +27,10 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
         layout.itemSize = CGSize.init(width: self.view.bounds.width - 20, height: 100)
         layout.minimumLineSpacing = 12
         layout.minimumInteritemSpacing = 0
-        layout.sectionInset = UIEdgeInsets(top: 30, left: 10, bottom: 20, right: 10)
+        //判断机型, 设置不同的上下 inset
+        let bigger = providMoreVerticalSpace()
+        
+        layout.sectionInset = UIEdgeInsets(top: bigger ? 0 : 10, left: 10, bottom: 20, right: 10)
         
         
        let timelineCVC = UICollectionView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height), collectionViewLayout: layout)
@@ -76,7 +79,7 @@ extension FBTimelineViewController {
         return cell
     }
     
-    //选中方法,
+    //Item 选中方法,
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //保存日历事件
        let date = combineDate(date: self.timelineVM.timelineModels[indexPath.item].date, time: self.timelineVM.timelineModels[indexPath.item].time)
@@ -97,11 +100,11 @@ extension FBTimelineViewController {
 
 //监听滑动偏移量禁止上拉
 extension FBTimelineViewController {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if timelineCVC.contentOffset.y <= 0 {
-           timelineCVC.contentOffset.y = 0
-        }
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if timelineCVC.contentOffset.y <= 0 {
+//           timelineCVC.contentOffset.y = 0
+//        }
+//    }
 }
 
 //保存日历事件
@@ -154,7 +157,18 @@ extension FBTimelineViewController {
     }
 }
 
+extension FBTimelineViewController {
+    fileprivate func providMoreVerticalSpace() -> Bool {
+        let currentDeviceH = UIScreen.main.bounds.height
+        let currentDeviveW = UIScreen.main.bounds.width
+        if currentDeviceH / currentDeviveW > 2 {
+            return true
+        }else {
+            return false
+        }
+    }
 
+}
 
 
 
