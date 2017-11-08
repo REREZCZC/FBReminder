@@ -48,17 +48,21 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
     
     fileprivate lazy var firstTitle : UILabel = {
         var firstTitle : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        firstTitle.text = "First"
-        firstTitle.textColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
+        firstTitle.text = "全 部"
+        firstTitle.font = UIFont.systemFont(ofSize: 18)
+        firstTitle.textColor = UIColor.orange
         firstTitle.textAlignment = .center
+
         return firstTitle
     }()
     
     fileprivate lazy var secondTitle : UILabel = {
         var secondTitle : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        secondTitle.text = "second"
+        secondTitle.text = "关 注"
+        secondTitle.font = UIFont.systemFont(ofSize: 18)
         secondTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
         secondTitle.textAlignment = .center
+        
         return secondTitle
     }()
     
@@ -72,7 +76,7 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
         
         layout.sectionInset = UIEdgeInsets(top: bigger ? 0 : 5, left: 10, bottom: 20, right: 10)
         
-       let timelineCVC = UICollectionView.init(frame: CGRect(x: 0, y: 65, width: self.view.bounds.width, height: self.view.bounds.height), collectionViewLayout: layout)
+       let timelineCVC = UICollectionView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height), collectionViewLayout: layout)
         timelineCVC.delegate = self
         timelineCVC.dataSource = self
         timelineCVC.tag = 2
@@ -83,7 +87,7 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
     }()
     
     fileprivate lazy var baseScrollowView : UIScrollView =  {
-        let baseScrollowView = UIScrollView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        let baseScrollowView = UIScrollView.init(frame: CGRect(x: 0, y: 65, width: self.view.bounds.width, height: self.view.bounds.height))
         baseScrollowView.contentSize = CGSize(width: self.view.bounds.width * 2, height: self.view.bounds.height - 60)
         baseScrollowView.isPagingEnabled = true
         baseScrollowView.delegate = self
@@ -110,7 +114,13 @@ extension FBTimelineViewController {
         
         timelineSegment.addSubview(slideBar)
         timelineSegment.addSubview(firstTitle)
+        let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(FBTimelineViewController.tapFirstTitle))
+        firstTitle.addGestureRecognizer(tapGesture1)
+        firstTitle.isUserInteractionEnabled = true
         timelineSegment.addSubview(secondTitle)
+        let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(FBTimelineViewController.tapSeconTitle))
+        secondTitle.addGestureRecognizer(tapGesture2)
+        secondTitle.isUserInteractionEnabled = true
         
         view.addSubview(baseScrollowView)
         
@@ -191,6 +201,30 @@ extension FBTimelineViewController {
 //保存日历事件
 extension FBTimelineViewController {
     
+    @objc func tapFirstTitle() {
+        if slideBar.center.x > timelineSegment.frame.size.width / 2 {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.slideBar.center.x = self.timelineSegment.frame.size.width / 2 - 67.5
+                //set title color
+                self.firstTitle.textColor = UIColor.orange
+                self.secondTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
+                self.baseScrollowView.contentOffset.x = 0
+            })
+            
+        }
+    }
+    @objc func tapSeconTitle() {
+        if slideBar.center.x < timelineSegment.frame.size.width / 2 {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.slideBar.center.x = 67.5 + self.timelineSegment.frame.size.width / 2
+                //set title color
+                self.firstTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
+                self.secondTitle.textColor = UIColor.orange
+                self.baseScrollowView.contentOffset.x = self.view.frame.size.width
+            })
+        }
+    }
+    
     //将字符串转成 NSDate 格式
     func combineDate(date : String, time : String) -> Date {
         let entireDate = date + time
@@ -251,11 +285,21 @@ extension FBTimelineViewController {
 }
 
 
+//update slider bar center
 extension FBTimelineViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if 1 == scrollView.tag {
-            print(timelineSegment.frame.size.width / self.view.frame.size.width)
-            slideBar.center.x = 67.5 + (timelineSegment.frame.size.width / self.view.frame.size.width) * scrollView.contentOffset.x / 2
+            if !(scrollView.contentOffset.x < 0) && !(scrollView.contentOffset.x > self.view.frame.size.width) {
+                slideBar.center.x = 67.5 + (timelineSegment.frame.size.width / self.view.frame.size.width) * scrollView.contentOffset.x / 2
+                if slideBar.center.x > timelineSegment.frame.size.width / 2 {
+                    firstTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
+                    secondTitle.textColor = UIColor.orange
+                }else {
+                    firstTitle.textColor = UIColor.orange
+                    secondTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
+                }
+            }else {
+            }
         }
     }
 }
