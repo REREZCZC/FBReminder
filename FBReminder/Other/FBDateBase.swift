@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SQLite
 class FBDateBaseManager: NSObject {
    //创建数据库
     func createDateBaseManager(filePath : String = "/Documents") {

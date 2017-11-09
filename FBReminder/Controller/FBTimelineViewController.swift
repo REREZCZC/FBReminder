@@ -18,6 +18,7 @@ private let kBoundsHeight = "self.view.bounds.height"
 
 
 fileprivate var timeLineItemArray : NSMutableArray = NSMutableArray()
+fileprivate var localCalenderEventArray : NSMutableArray = NSMutableArray()
 
 class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var savedEventId : String = ""
@@ -98,9 +99,11 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        getAllcalendarEvents()
         setupUI()
         updateContent()
         loadData()
+        
     }
     
 }
@@ -180,6 +183,9 @@ extension FBTimelineViewController {
         let cell : FBTimelineCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: kTimelineCellID, for: indexPath) as! FBTimelineCollectionViewCell
         
         cell.cellModel = timelineVM.timelineModels[indexPath.item]
+        if localCalenderEventArray.contains(cell.cellModel?.title as Any) {
+            cell.backgroundColor = UIColor.blue
+        }
         
         return cell
     }
@@ -197,6 +203,28 @@ extension FBTimelineViewController {
 
 //日历事件处理
 extension FBTimelineViewController {
+    //查询系统日历事件
+    fileprivate func getAllcalendarEvents() {
+        let eventStore = EKEventStore()
+        
+        //过滤掉节假日等系统事件
+        let calendars = eventStore.calendars(for: .event).filter({
+            (calender) -> Bool in
+            return calender.type == .local || calender.type == .calDAV
+        })
+        //获取全部日历(后90天)
+        let startDate = Date().addingTimeInterval(0)
+        let endDate = Date().addingTimeInterval(3600 * 24 * 90)
+        let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: calendars)
+        if let eV = eventStore.events(matching: predicate) as [EKEvent]! {
+            for i in eV {
+                localCalenderEventArray.add(i.title.description)
+            }
+        }
+    }
+    
+    
+    
     //创建事件
     func addEvent( title : String, startDate : Date) {
         let eventStore = EKEventStore()
