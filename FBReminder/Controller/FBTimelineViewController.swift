@@ -26,7 +26,6 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
     
     //顶部列表选择器
     fileprivate lazy var timelineSegment : UIView = {
-        //背景
         let timelineSegment = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         timelineSegment.backgroundColor = UIColor(red: 230/255, green: 229/255, blue: 228/255, alpha: 1.0)
         timelineSegment.layer.borderWidth = 1
@@ -46,37 +45,47 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
         return slideBar
     }()
     
+    //标题一
     fileprivate lazy var firstTitle : UILabel = {
         var firstTitle : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         firstTitle.text = "全 部"
         firstTitle.font = UIFont.systemFont(ofSize: 18)
         firstTitle.textColor = UIColor.orange
         firstTitle.textAlignment = .center
-
         return firstTitle
     }()
-    
+    //标题二
     fileprivate lazy var secondTitle : UILabel = {
         var secondTitle : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         secondTitle.text = "关 注"
         secondTitle.font = UIFont.systemFont(ofSize: 18)
         secondTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
         secondTitle.textAlignment = .center
-        
         return secondTitle
     }()
     
+    //列表底部的scrollView
+    fileprivate lazy var baseScrollowView : UIScrollView =  {
+        let bigger = providMoreVerticalSpace()
+        let baseScrollowView = UIScrollView.init(frame: CGRect(x: 0, y: bigger ? 85 : 65, width: self.view.bounds.width, height: self.view.bounds.height))
+        baseScrollowView.contentSize = CGSize(width: self.view.bounds.width * 2, height: self.view.bounds.height - 60)
+        baseScrollowView.isPagingEnabled = true
+        baseScrollowView.delegate = self
+        baseScrollowView.tag = 1
+        baseScrollowView.showsHorizontalScrollIndicator = false
+        return baseScrollowView
+    }()
+    
+    //时间线, 列表
     fileprivate lazy var timelineCVC : UICollectionView = {
+        let bigger = providMoreVerticalSpace()
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize.init(width: self.view.bounds.width - 20, height: 100)
         layout.minimumLineSpacing = 12
         layout.minimumInteritemSpacing = 0
-        //判断机型, 设置不同的上下 inset
-        let bigger = providMoreVerticalSpace()
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 20, right: 10)
         
-        layout.sectionInset = UIEdgeInsets(top: bigger ? 0 : 5, left: 10, bottom: 20, right: 10)
-        
-       let timelineCVC = UICollectionView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height), collectionViewLayout: layout)
+        let timelineCVC = UICollectionView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height-(bigger ? 85 : 65)), collectionViewLayout: layout)
         timelineCVC.delegate = self
         timelineCVC.dataSource = self
         timelineCVC.tag = 2
@@ -84,16 +93,6 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
         timelineCVC.register(FBTimelineCollectionViewCell.self, forCellWithReuseIdentifier: kTimelineCellID)
         
         return timelineCVC
-    }()
-    
-    fileprivate lazy var baseScrollowView : UIScrollView =  {
-        let baseScrollowView = UIScrollView.init(frame: CGRect(x: 0, y: 65, width: self.view.bounds.width, height: self.view.bounds.height))
-        baseScrollowView.contentSize = CGSize(width: self.view.bounds.width * 2, height: self.view.bounds.height - 60)
-        baseScrollowView.isPagingEnabled = true
-        baseScrollowView.delegate = self
-        baseScrollowView.tag = 1
-        baseScrollowView.showsHorizontalScrollIndicator = false
-        return baseScrollowView
     }()
     
 
@@ -106,6 +105,8 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
     
 }
 
+
+//页面布局
 extension FBTimelineViewController {
     fileprivate func setupUI() {
         self.view.backgroundColor = UIColor.white
@@ -136,10 +137,10 @@ extension FBTimelineViewController {
     }
     
     fileprivate func updateContent() {
-        
+        let bigger = providMoreVerticalSpace()
         timelineSegment.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(25)
-            make.top.equalTo(25)
+            make.top.equalTo(bigger ? 45 : 25)
             make.width.equalTo(self.view.bounds.size.width - 50)
             make.height.equalTo(35)
         }
@@ -153,10 +154,12 @@ extension FBTimelineViewController {
         
         
         firstTitle.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(slideBar.snp.width)
             make.centerY.equalTo(timelineSegment.snp.centerY)
             make.centerX.equalTo(timelineSegment.snp.left).offset((self.view.bounds.size.width - 50) / 4)
         }
         secondTitle.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(slideBar.snp.width)
             make.centerY.equalTo(timelineSegment.snp.centerY)
             make.centerX.equalTo(timelineSegment.snp.right).offset(-(self.view.bounds.size.width - 50)/4)
         }
@@ -165,6 +168,8 @@ extension FBTimelineViewController {
     
 }
 
+
+//CollectionView代理方法
 extension FBTimelineViewController {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -184,57 +189,14 @@ extension FBTimelineViewController {
         //保存日历事件
        let date = combineDate(date: self.timelineVM.timelineModels[indexPath.item].date, time: self.timelineVM.timelineModels[indexPath.item].time)
         addEvent(title: self.timelineVM.timelineModels[indexPath.item].title, startDate: date)
+
     }
 
 }
 
-//获得数据
-extension FBTimelineViewController {
-    fileprivate func loadData() {
-        timelineVM.loadTimelineData(preDate: "") {
-            self.timelineCVC.reloadData()
-        }
-    }
-}
 
-
-//保存日历事件
+//日历事件处理
 extension FBTimelineViewController {
-    
-    @objc func tapFirstTitle() {
-        if slideBar.center.x > timelineSegment.frame.size.width / 2 {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.slideBar.center.x = self.timelineSegment.frame.size.width / 2 - 67.5
-                //set title color
-                self.firstTitle.textColor = UIColor.orange
-                self.secondTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
-                self.baseScrollowView.contentOffset.x = 0
-            })
-            
-        }
-    }
-    @objc func tapSeconTitle() {
-        if slideBar.center.x < timelineSegment.frame.size.width / 2 {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.slideBar.center.x = 67.5 + self.timelineSegment.frame.size.width / 2
-                //set title color
-                self.firstTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
-                self.secondTitle.textColor = UIColor.orange
-                self.baseScrollowView.contentOffset.x = self.view.frame.size.width
-            })
-        }
-    }
-    
-    //将字符串转成 NSDate 格式
-    func combineDate(date : String, time : String) -> Date {
-        let entireDate = date + time
-        let format : DateFormatter = DateFormatter()
-        format.dateFormat = "yyyy-MM-ddHH:mm"
-        format.timeZone = TimeZone(abbreviation: "CTS")
-        let date : Date = format.date(from: entireDate)!
-        return date
-    }
-    
     //创建事件
     func addEvent( title : String, startDate : Date) {
         let eventStore = EKEventStore()
@@ -272,25 +234,40 @@ extension FBTimelineViewController {
     }
 }
 
+
+
+//标题选择器和列表的交互操作
 extension FBTimelineViewController {
-    fileprivate func providMoreVerticalSpace() -> Bool {
-        let currentDeviceH = UIScreen.main.bounds.height
-        let currentDeviveW = UIScreen.main.bounds.width
-        if currentDeviceH / currentDeviveW > 2 {
-            return true
-        }else {
-            return false
+    //点击第一个标题, 滚动列表
+    @objc func tapFirstTitle() {
+        if slideBar.center.x > timelineSegment.frame.size.width / 2 {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.slideBar.center.x = self.timelineSegment.frame.size.width / 2 - (self.slideBar.frame.size.width/2 + 2)
+                //set title color
+                self.firstTitle.textColor = UIColor.orange
+                self.secondTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
+                self.baseScrollowView.contentOffset.x = 0
+            })
+            
         }
     }
-}
-
-
-//update slider bar center
-extension FBTimelineViewController {
+    //点击第二个标题, 滚动列表
+    @objc func tapSeconTitle() {
+        if slideBar.center.x < timelineSegment.frame.size.width / 2 {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.slideBar.center.x = (self.slideBar.frame.size.width/2 + 2) + self.timelineSegment.frame.size.width / 2
+                //set title color
+                self.firstTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
+                self.secondTitle.textColor = UIColor.orange
+                self.baseScrollowView.contentOffset.x = self.view.frame.size.width
+            })
+        }
+    }
+    //滚动列表, 切换标题位置及文字颜色
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if 1 == scrollView.tag {
             if !(scrollView.contentOffset.x < 0) && !(scrollView.contentOffset.x > self.view.frame.size.width) {
-                slideBar.center.x = 67.5 + (timelineSegment.frame.size.width / self.view.frame.size.width) * scrollView.contentOffset.x / 2
+                slideBar.center.x = slideBar.frame.size.width/2 + 2 + (timelineSegment.frame.size.width / self.view.frame.size.width) * scrollView.contentOffset.x / 2
                 if slideBar.center.x > timelineSegment.frame.size.width / 2 {
                     firstTitle.textColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
                     secondTitle.textColor = UIColor.orange
@@ -305,7 +282,36 @@ extension FBTimelineViewController {
 }
 
 
-
+//工具方法
+extension FBTimelineViewController {
+    //加载数据
+    fileprivate func loadData() {
+        timelineVM.loadTimelineData(preDate: "") {
+            self.timelineCVC.reloadData()
+        }
+    }
+    
+    //判断机型, 是否提供更多的上下空间
+    fileprivate func providMoreVerticalSpace() -> Bool {
+        let currentDeviceH = UIScreen.main.bounds.height
+        let currentDeviveW = UIScreen.main.bounds.width
+        if currentDeviceH / currentDeviveW > 2 {
+            return true
+        }else {
+            return false
+        }
+    }
+    
+    //将字符串转成 NSDate 格式
+    fileprivate func combineDate(date : String, time : String) -> Date {
+        let entireDate = date + time
+        let format : DateFormatter = DateFormatter()
+        format.dateFormat = "yyyy-MM-ddHH:mm"
+        format.timeZone = TimeZone(abbreviation: "CTS")
+        let date : Date = format.date(from: entireDate)!
+        return date
+    }
+}
 
 
 

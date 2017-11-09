@@ -9,6 +9,7 @@
 import UIKit
 
 class FBTimelineModel {
+    var matchInfo : String = ""
     var team1 : String = ""
     var team2 : String = ""
     var team1IconUrl : String = ""

@@ -47,6 +47,10 @@ extension FBTimelineViewModel {
             self.preDataBegin = String(describing: result["pre_date_begin"])
 
             for i in 0...previewGameInfo.count - 1 {
+                print("\(previewGameInfo[i])")
+                //比赛信息
+                let matchInfo = previewGameInfo[i]["livecast_id"]
+                
                 //主队名
                 let team1 = previewGameInfo[i]["Team1"]
              
@@ -64,6 +68,7 @@ extension FBTimelineViewModel {
                 let title  = previewGameInfo[i]["Title"]
                 
                 let itemDic : FBTimelineModel = FBTimelineModel()
+                itemDic.matchInfo = String(describing: matchInfo)
                 itemDic.team1 = String(describing: team1)
                 itemDic.team2 = String(describing: team2)
                 itemDic.team1IconUrl = String(describing: team1IconUrl)
