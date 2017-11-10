@@ -18,12 +18,18 @@ private let kBoundsHeight = "self.view.bounds.height"
 
 
 fileprivate var timeLineItemArray : NSMutableArray = NSMutableArray()
+//查询所有日历事件后的标题数组, 用于区别已经添加的事件
 fileprivate var localCalenderEventArray : NSMutableArray = NSMutableArray()
+
+
+
 
 class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var savedEventId : String = ""
     
     fileprivate lazy var timelineVM : FBTimelineViewModel = FBTimelineViewModel()
+    fileprivate lazy var userDefault : UserDefaults = UserDefaults.standard
+    fileprivate lazy var eventStore : EKEventStore = EKEventStore()
     
     //顶部列表选择器
     fileprivate lazy var timelineSegment : UIView = {
@@ -188,9 +194,13 @@ extension FBTimelineViewController {
         let cell : FBTimelineCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: kTimelineCellID, for: indexPath) as! FBTimelineCollectionViewCell
         
         cell.cellModel = timelineVM.timelineModels[indexPath.item]
+
         //判断这个数据是否已经保存到日历中了,区别对待一下
         if localCalenderEventArray.contains(cell.cellModel?.title as Any) {
-            cell.backgroundColor = UIColor.blue
+            cell.backgroundColor = UIColor.white
+        }else {
+            //这里如果不设置未选中的颜色, 就会出现"被选中"的问题
+            cell.backgroundColor = UIColor.orange
         }
         
         return cell
@@ -201,12 +211,24 @@ extension FBTimelineViewController {
         //保存日历事件
         let date = combineDate(date: self.timelineVM.timelineModels[indexPath.item].date, time: self.timelineVM.timelineModels[indexPath.item].time)
         //添加或者删除日历
+        //日历中已经存在该事件
         if localCalenderEventArray.contains(self.timelineVM.timelineModels[indexPath.item].title as Any) {
             //如果已经存在了, 就先从数组中删除, 在从日历中删除
             localCalenderEventArray.remove(self.timelineVM.timelineModels[indexPath.item].title)
+            let eventID = userDefault.object(forKey: self.timelineVM.timelineModels[indexPath.item].title)
+            print("查询ID - \(String(describing: eventID)) \(self.timelineVM.timelineModels[indexPath.item].title)")
             //从日历中删除
+            deleteEvent(eventID: eventID as! String)
+            self.timelineCVC.reloadData()
+        }else {//还没有这个事件, 执行事件存储
+            //先添加事件到日历
+            addEvent(title: self.timelineVM.timelineModels[indexPath.item].title, startDate: date)
+            //在刷新事件数组
+            getAllcalendarEvents()
+            //在刷新界面,设置选中Cell的外观
+            self.timelineCVC.reloadData()
         }
-        addEvent(title: self.timelineVM.timelineModels[indexPath.item].title, startDate: date)
+        
 
     }
 
@@ -217,9 +239,9 @@ extension FBTimelineViewController {
 extension FBTimelineViewController {
     //请求系统日历权限
     fileprivate func verifyCalenderPermission() {
-        let evenStore = EKEventStore()
+//        let evenStore = EKEventStore()
         if EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized {
-            evenStore.requestAccess(to: .event, completion: { (Bool, Error) in
+            eventStore.requestAccess(to: .event, completion: { (Bool, Error) in
             })
         }
     }
@@ -227,7 +249,7 @@ extension FBTimelineViewController {
     //查询系统日历事件
     fileprivate func getAllcalendarEvents() {
         localCalenderEventArray.removeAllObjects()
-        let eventStore = EKEventStore()
+//        let eventStore = EKEventStore()
         
         //过滤掉节假日等系统事件
         let calendars = eventStore.calendars(for: .event).filter({
@@ -249,12 +271,12 @@ extension FBTimelineViewController {
     
     //创建事件
     func addEvent( title : String, startDate : Date) {
-        let eventStore = EKEventStore()
+//        let eventStore = EKEventStore()
         let endDate = startDate.addingTimeInterval(60 * 110)//一场比赛的时间
         //判断权限
         if EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized {
             eventStore.requestAccess(to: .event, completion: { (Bool, Error) in
-                self.createEvent(eventStore: eventStore, title: title, startDate: startDate, endDate: endDate)
+                self.createEvent(eventStore: self.eventStore, title: title, startDate: startDate, endDate: endDate)
             })
         }else {
             createEvent(eventStore: eventStore, title: title, startDate: startDate, endDate: endDate)
@@ -277,12 +299,34 @@ extension FBTimelineViewController {
         
         do {
             try eventStore.save(event, span: .thisEvent)
+        
             savedEventId = event.eventIdentifier
-            
+            userDefault.setValue(savedEventId, forKey: event.title)
+            print("保存ID - \(savedEventId) -- \(event.title)")
         } catch {
             print("保存失败")
         }
     }
+    
+    
+    //通过EventID 找到指定的日历事件, 然后删除
+    func deleteEvent(eventID : String) {
+        print("EventID: \(eventID)")
+        let event = eventStore.event(withIdentifier: eventID)
+        do {
+            if (event != nil) {
+                try eventStore.remove(event!, span: .futureEvents)
+            }
+            
+        } catch  {
+            print("删除失败")
+        }
+    
+    }
+    
+    
+    
+    
 }
 
 
