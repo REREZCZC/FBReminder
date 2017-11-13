@@ -13,12 +13,12 @@
 		4C24B9FA1F9600030085D40A /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24B9F91F9600030085D40A /* BaseModel.swift */; };
 		4C67E85A1F8DF5910062811D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C67E8591F8DF5910062811D /* AppDelegate.swift */; };
 		4C67E85F1F8DF5910062811D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C67E85D1F8DF5910062811D /* Main.storyboard */; };
-		4C67E8611F8DF5910062811D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C67E8601F8DF5910062811D /* Assets.xcassets */; };
 		4C67E8641F8DF5910062811D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C67E8621F8DF5910062811D /* LaunchScreen.storyboard */; };
 		4C67E8701F8DFB250062811D /* FBTimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C67E86F1F8DFB250062811D /* FBTimelineViewController.swift */; };
 		4C67E8721F8E0D040062811D /* FBTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C67E8711F8E0D040062811D /* FBTimelineCollectionViewCell.swift */; };
 		4CB7A0391FAC76C400ECC3A3 /* FBSegmentBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7A0381FAC76C400ECC3A3 /* FBSegmentBar.swift */; };
 		4CE9A6A11F9F12C200D0B162 /* FBDateBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE9A6A01F9F12C200D0B162 /* FBDateBase.swift */; };
+		AB68E0EB1FB9636700812C57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB68E0EA1FB9636700812C57 /* Assets.xcassets */; };
 		DEEAFBEA81E872A2965EA98C /* Pods_FBReminder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD4EE22F91D2D04A8BD7F6A /* Pods_FBReminder.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,7 +31,6 @@
 		4C67E8561F8DF5910062811D /* FBReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C67E8591F8DF5910062811D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C67E85E1F8DF5910062811D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4C67E8601F8DF5910062811D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C67E8631F8DF5910062811D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C67E8651F8DF5910062811D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C67E86F1F8DFB250062811D /* FBTimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBTimelineViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +38,7 @@
 		4CB7A0381FAC76C400ECC3A3 /* FBSegmentBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBSegmentBar.swift; sourceTree = "<group>"; };
 		4CC29F411F947D7E004AE707 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE9A6A01F9F12C200D0B162 /* FBDateBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBDateBase.swift; sourceTree = "<group>"; };
+		AB68E0EA1FB9636700812C57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CCD4EE22F91D2D04A8BD7F6A /* Pods_FBReminder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FBReminder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC3FBA9F182D9F7EC507E2A /* Pods-FBReminder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FBReminder.release.xcconfig"; path = "Pods/Target Support Files/Pods-FBReminder/Pods-FBReminder.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +84,7 @@
 		4C4AB23E1F9847D4009EF9D3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AB68E0EA1FB9636700812C57 /* Assets.xcassets */,
 				4C67E8711F8E0D040062811D /* FBTimelineCollectionViewCell.swift */,
 				4CB7A0381FAC76C400ECC3A3 /* FBSegmentBar.swift */,
 			);
@@ -136,7 +137,6 @@
 				4C4AB23D1F9847AB009EF9D3 /* Controller */,
 				4C67E8591F8DF5910062811D /* AppDelegate.swift */,
 				4C67E85D1F8DF5910062811D /* Main.storyboard */,
-				4C67E8601F8DF5910062811D /* Assets.xcassets */,
 				4C67E8621F8DF5910062811D /* LaunchScreen.storyboard */,
 				4C67E8651F8DF5910062811D /* Info.plist */,
 			);
@@ -206,7 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C67E8641F8DF5910062811D /* LaunchScreen.storyboard in Resources */,
-				4C67E8611F8DF5910062811D /* Assets.xcassets in Resources */,
+				AB68E0EB1FB9636700812C57 /* Assets.xcassets in Resources */,
 				4C67E85F1F8DF5910062811D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -21,6 +21,8 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
     lazy var timeInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     lazy var dateInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     lazy var weekInfo : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    //alarmview
+    lazy var alarmIcon : UIImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
     
     override init(frame: CGRect) {
@@ -58,67 +60,51 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
 }
 extension FBTimelineCollectionViewCell {
     fileprivate func setupUI(){
-        //homeTeamIcon
-        
-        
 
-        
         //timeInfo
         timeInfo.textAlignment = .center
-        timeInfo.textColor = UIColor.white
-        timeInfo.font = UIFont.systemFont(ofSize: 14)
+        timeInfo.textColor = UIColor.orange
+        timeInfo.font = UIFont.systemFont(ofSize: 12)
         self.addSubview(timeInfo)
         timeInfo.snp.makeConstraints { (make) -> Void in
             make.centerX.equalTo(self.snp.centerX)
-            make.centerY.equalTo(self.snp.centerY)
+            make.centerY.equalTo(self.snp.centerY).offset(15)
         }
         
         dateInfo.textAlignment = .center
-        dateInfo.font = UIFont.systemFont(ofSize: 14)
-        dateInfo.textColor = UIColor.white
+        dateInfo.font = UIFont.systemFont(ofSize: 12)
+        dateInfo.textColor = UIColor.orange
         self.addSubview(dateInfo)
         dateInfo.snp.makeConstraints { (make)-> Void in
             make.centerX.equalTo(self.snp.centerX)
-            make.bottom.equalTo(timeInfo.snp.top).offset(-2)
+            make.centerY.equalTo(self.snp.centerY).offset(-15)
         }
-        
-        weekInfo.textAlignment = .center
-        weekInfo.font = UIFont.systemFont(ofSize: 14)
-        weekInfo.textColor = UIColor.white
-        self.addSubview(weekInfo)
-        weekInfo.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(timeInfo.snp.bottom).offset(2)
-            make.centerX.equalTo(self.snp.centerX)
-        }
-        
         
         
         self.addSubview(homeTeamIcon)
         homeTeamIcon.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(50)
-//            make.left.equalTo(30)
+            make.width.height.equalTo(35)
             make.right.equalTo(dateInfo.snp.left).offset(-15)
             make.top.equalTo(16)
         }
         //homeTeamTitle
-        homeTeamTitle.font = UIFont.systemFont(ofSize: 13)
+        homeTeamTitle.font = UIFont.systemFont(ofSize: 12)
         homeTeamTitle.textAlignment = .center
         self.addSubview(homeTeamTitle)
         homeTeamTitle.snp.makeConstraints { (make) -> Void in
             make.centerX.equalTo(homeTeamIcon.snp.centerX)
-            make.bottom.equalTo(-10)
+            make.bottom.equalTo(-15)
         }
         
         //visitTeamIcon
         self.addSubview(visitTeamIcon)
         visitTeamIcon.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(50)
-//            make.right.equalTo(-30)
+            make.width.height.equalTo(35)
             make.left.equalTo(dateInfo.snp.right).offset(15)
             make.centerY.equalTo(homeTeamIcon.snp.centerY)
         }
         //visitTeamTitle
-        visitTeamTitle.font = UIFont.systemFont(ofSize: 14)
+        visitTeamTitle.font = UIFont.systemFont(ofSize: 12)
         visitTeamTitle.textAlignment = .center
         self.addSubview(visitTeamTitle)
         visitTeamTitle.snp.makeConstraints { (make) -> Void in
@@ -126,11 +112,29 @@ extension FBTimelineCollectionViewCell {
             make.centerY.equalTo(homeTeamTitle.snp.centerY)
         }
         
-        self.backgroundColor = UIColor.orange
-        self.layer.cornerRadius = 8
-        self.layer.borderWidth = 5
-        self.layer.borderColor = UIColor.orange.cgColor
+        weekInfo.textAlignment = .center
+        weekInfo.font = UIFont.systemFont(ofSize: 12)
+        weekInfo.textColor = UIColor.orange
+        self.addSubview(weekInfo)
+        weekInfo.snp.makeConstraints { (make) -> Void in
+            make.centerY.equalTo(self.snp.centerY)
+            make.left.equalTo(self.snp.left)
+            make.right.equalTo(homeTeamIcon.snp.left)
+        }
         
+        self.addSubview(alarmIcon)
+//        alarmIcon.backgroundColor = UIColor.white
+        alarmIcon.image = UIImage(named: "alarm")
+        alarmIcon.snp.makeConstraints { (make) -> Void in
+            make.centerY.equalTo(self.snp.centerY)
+            make.centerX.equalTo(self.snp.right).offset(-25)
+            make.width.height.equalTo(25)
+        }
+        
+        self.backgroundColor = UIColor.white
+        self.layer.cornerRadius = 8
+        self.layer.borderWidth = 1.8
+        self.layer.borderColor = UIColor.orange.cgColor
         
     }
 }
@@ -197,24 +201,6 @@ extension FBTimelineCollectionViewCell {
         }
         
     }
-//    public func dayOfWeek3(_ y: Int, _ m: Int, _ d: Int) -> Int {
-//        var y = y
-//        if (m < 3) {
-//            y -= 1
-//        }
-//        let c = y / 100
-//        let g = y % 100
-//
-//        let monthTable = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]
-//        let e = monthTable[m - 1]
-//
-//        let centuryTable = [0, 5, 3, 1]
-//        let f = centuryTable[c % 4]
-//
-//        let h = (d + e + f + g + g/4) % 7
-//        return (h + 6) % 7 + 1
-//    }
-    
 
 }
 
