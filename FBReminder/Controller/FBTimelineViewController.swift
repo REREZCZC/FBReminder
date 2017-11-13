@@ -22,8 +22,6 @@ fileprivate var timeLineItemArray : NSMutableArray = NSMutableArray()
 fileprivate var localCalenderEventArray : NSMutableArray = NSMutableArray()
 
 
-
-
 class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var savedEventId : String = ""
     
@@ -197,10 +195,10 @@ extension FBTimelineViewController {
 
         //判断这个数据是否已经保存到日历中了,区别对待一下
         if localCalenderEventArray.contains(cell.cellModel?.title as Any) {
-            cell.backgroundColor = UIColor.white
+//            cell.backgroundColor = UIColor.white
         }else {
             //这里如果不设置未选中的颜色, 就会出现"被选中"的问题
-            cell.backgroundColor = UIColor.orange
+//            cell.backgroundColor = UIColor.orange
         }
         
         return cell
@@ -216,7 +214,6 @@ extension FBTimelineViewController {
             //如果已经存在了, 就先从数组中删除, 在从日历中删除
             localCalenderEventArray.remove(self.timelineVM.timelineModels[indexPath.item].title)
             let eventID = userDefault.object(forKey: self.timelineVM.timelineModels[indexPath.item].title)
-            print("查询ID - \(String(describing: eventID)) \(self.timelineVM.timelineModels[indexPath.item].title)")
             //从日历中删除
             deleteEvent(eventID: eventID as! String)
             self.timelineCVC.reloadData()
@@ -302,7 +299,7 @@ extension FBTimelineViewController {
         
             savedEventId = event.eventIdentifier
             userDefault.setValue(savedEventId, forKey: event.title)
-            print("保存ID - \(savedEventId) -- \(event.title)")
+//            print("保存ID - \(savedEventId) -- \(event.title)")
         } catch {
             print("保存失败")
         }
@@ -311,7 +308,7 @@ extension FBTimelineViewController {
     
     //通过EventID 找到指定的日历事件, 然后删除
     func deleteEvent(eventID : String) {
-        print("EventID: \(eventID)")
+//        print("EventID: \(eventID)")
         let event = eventStore.event(withIdentifier: eventID)
         do {
             if (event != nil) {

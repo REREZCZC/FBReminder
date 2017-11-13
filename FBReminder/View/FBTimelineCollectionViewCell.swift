@@ -59,36 +59,9 @@ class FBTimelineCollectionViewCell: UICollectionViewCell {
 extension FBTimelineCollectionViewCell {
     fileprivate func setupUI(){
         //homeTeamIcon
-        self.addSubview(homeTeamIcon)
-        homeTeamIcon.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(50)
-            make.left.equalTo(30)
-            make.top.equalTo(16)
-        }
-        //homeTeamTitle
-        homeTeamTitle.font = UIFont.systemFont(ofSize: 13)
-        homeTeamTitle.textAlignment = .center
-        self.addSubview(homeTeamTitle)
-        homeTeamTitle.snp.makeConstraints { (make) -> Void in
-            make.centerX.equalTo(homeTeamIcon.snp.centerX)
-            make.bottom.equalTo(-10)
-        }
         
-        //visitTeamIcon
-        self.addSubview(visitTeamIcon)
-        visitTeamIcon.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(50)
-            make.right.equalTo(-30)
-            make.centerY.equalTo(homeTeamIcon.snp.centerY)
-        }
-        //visitTeamTitle
-        visitTeamTitle.font = UIFont.systemFont(ofSize: 14)
-        visitTeamTitle.textAlignment = .center
-        self.addSubview(visitTeamTitle)
-        visitTeamTitle.snp.makeConstraints { (make) -> Void in
-            make.centerX.equalTo(visitTeamIcon.snp.centerX)
-            make.centerY.equalTo(homeTeamTitle.snp.centerY)
-        }
+        
+
         
         //timeInfo
         timeInfo.textAlignment = .center
@@ -118,9 +91,45 @@ extension FBTimelineCollectionViewCell {
             make.centerX.equalTo(self.snp.centerX)
         }
         
+        
+        
+        self.addSubview(homeTeamIcon)
+        homeTeamIcon.snp.makeConstraints { (make) -> Void in
+            make.width.height.equalTo(50)
+//            make.left.equalTo(30)
+            make.right.equalTo(dateInfo.snp.left).offset(-15)
+            make.top.equalTo(16)
+        }
+        //homeTeamTitle
+        homeTeamTitle.font = UIFont.systemFont(ofSize: 13)
+        homeTeamTitle.textAlignment = .center
+        self.addSubview(homeTeamTitle)
+        homeTeamTitle.snp.makeConstraints { (make) -> Void in
+            make.centerX.equalTo(homeTeamIcon.snp.centerX)
+            make.bottom.equalTo(-10)
+        }
+        
+        //visitTeamIcon
+        self.addSubview(visitTeamIcon)
+        visitTeamIcon.snp.makeConstraints { (make) -> Void in
+            make.width.height.equalTo(50)
+//            make.right.equalTo(-30)
+            make.left.equalTo(dateInfo.snp.right).offset(15)
+            make.centerY.equalTo(homeTeamIcon.snp.centerY)
+        }
+        //visitTeamTitle
+        visitTeamTitle.font = UIFont.systemFont(ofSize: 14)
+        visitTeamTitle.textAlignment = .center
+        self.addSubview(visitTeamTitle)
+        visitTeamTitle.snp.makeConstraints { (make) -> Void in
+            make.centerX.equalTo(visitTeamIcon.snp.centerX)
+            make.centerY.equalTo(homeTeamTitle.snp.centerY)
+        }
+        
         self.backgroundColor = UIColor.orange
         self.layer.cornerRadius = 8
-        
+        self.layer.borderWidth = 5
+        self.layer.borderColor = UIColor.orange.cgColor
         
         
     }
