@@ -13,6 +13,7 @@ import EventKit
 import SnapKit
 
 private let kTimelineCellID = "kTimelineCellID"
+private let kNewsLineCellID = "kNewsLineCellID"
 private let kBoundsWidth = "self.view.bounds.width"
 private let kBoundsHeight = "self.view.bounds.height"
 
@@ -21,10 +22,12 @@ fileprivate var timeLineItemArray : NSMutableArray = NSMutableArray()
 //查询所有日历事件后的标题数组, 用于区别已经添加的事件
 fileprivate var localCalenderEventArray : NSMutableArray = NSMutableArray()
 
-class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource {
+    
     var savedEventId : String = ""
     
     fileprivate lazy var timelineVM : FBTimelineViewModel = FBTimelineViewModel()
+    fileprivate lazy var newsLineVM : FBNewsLineViewModel = FBNewsLineViewModel()
     fileprivate lazy var userDefault : UserDefaults = UserDefaults.standard
     fileprivate lazy var eventStore : EKEventStore = EKEventStore()
     
@@ -99,6 +102,18 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
         return timelineCVC
     }()
     
+    fileprivate lazy var newsLineVC : UITableView = {
+        let bigger = providMoreVerticalSpace()
+        let newsLineVC = UITableView.init(frame: CGRect(x: self.view.bounds.width, y: 0, width: self.view.bounds.width, height: self.view.bounds.height-(bigger ? 85 : 65)))
+        
+        newsLineVC.delegate = self
+        newsLineVC.dataSource = self
+        
+        newsLineVC.register(UITableViewCell.self, forCellReuseIdentifier: kNewsLineCellID)
+        
+        return newsLineVC
+    }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,7 +126,8 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
         //设置约束
         updateContent()
         //请求加载数据
-        loadData()
+        loadTimelineData()
+        loadNewslineData()
     }
     
 }
@@ -136,7 +152,10 @@ extension FBTimelineViewController {
         
         view.addSubview(baseScrollowView)
         
+        //添加 timeline
         baseScrollowView.addSubview(timelineCVC)
+        //添加 newsLine
+        baseScrollowView.addSubview(newsLineVC)
         
         //添加上拉刷新
         timelineCVC.setUpFooterRefresh {
@@ -228,6 +247,19 @@ extension FBTimelineViewController {
             self.timelineCVC.reloadData()
         }
     }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: kNewsLineCellID, for: indexPath) 
+        cell.backgroundColor = UIColor.lightGray;
+        
+        return cell
+    }
+
 }
 
 
@@ -314,7 +346,6 @@ extension FBTimelineViewController {
 }
 
 
-
 //标题选择器和列表的交互操作
 extension FBTimelineViewController {
     //点击第一个标题, 滚动列表
@@ -364,9 +395,15 @@ extension FBTimelineViewController {
 //工具方法
 extension FBTimelineViewController {
     //加载数据
-    fileprivate func loadData() {
+    fileprivate func loadTimelineData() {
         timelineVM.loadTimelineData(preDate: "") {
             self.timelineCVC.reloadData()
+        }
+    }
+    
+    fileprivate func loadNewslineData() {
+        newsLineVM.loadNewsLineData {
+            self.newsLineVC.reloadData()
         }
     }
     

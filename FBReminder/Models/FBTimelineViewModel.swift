@@ -11,6 +11,11 @@ import UIKit
 import SwiftyJSON
 import MJExtension
 
+
+private let news = "http://saga.sports.sina.com.cn/api/news/premier_league?uid=&did=ae4dac526a62e35c86c2fcb22691d898&num=20&offset=0"
+private let ssss = "http://saga.sports.sina.com.cn/api/news/premier_league?uid=&did=ae4dac526a62e35c86c2fcb22691d898&num=20&offset=20"
+private let aaaa = "http://saga.sports.sina.com.cn/api/news/premier_league?uid=&did=ae4dac526a62e35c86c2fcb22691d898&num=20&offset=40"
+
 //first request
 private let englandTimelineURL       = "http://platform.sina.com.cn/sports_all/client_api?_sport_t_=livecast&l_type=4&_sport_a_=typeMatches&__os__=iphone&app_key=2923419926&__version__=3.13.1.1%20HTTP/1.1"
 private let chinaTimelineURL         = "http://platform.sina.com.cn/sports_all/client_api?_sport_t_=livecast&l_type=213&_sport_a_=typeMatches&__os__=iphone&app_key=2923419926&__version__=3.13.1.1%20HTTP/1.1"
