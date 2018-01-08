@@ -20,6 +20,7 @@ class FBNewslineTableViewCell: UITableViewCell {
         setupUI()
     }
     
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -27,6 +28,11 @@ class FBNewslineTableViewCell: UITableViewCell {
     var cellModel : FBNewsLineModel? {
         didSet {
             shortTitle.text = cellModel?.shortTitle
+            if (shortTitle.text?.contains("阿森纳"))! {
+                shortTitle.textColor = UIColor.red
+            }else {
+                shortTitle.textColor = UIColor.orange
+            }
         }
     }
     
@@ -42,9 +48,7 @@ class FBNewslineTableViewCell: UITableViewCell {
         
         shortTitle.textAlignment = .left
         shortTitle.textColor = UIColor.orange
-//        shortTitle.font = UIFont.systemFont(ofSize: 18)
         shortTitle.font = UIFont.init(name: "DolbyGustan-Book", size: 18)
-//        shortTitle.font = UIFont.fontNames(forFamilyName: "DolbyGustan-Light")
         
         self.addSubview(shortTitle)
         shortTitle.snp.makeConstraints { (make) -> Void in
