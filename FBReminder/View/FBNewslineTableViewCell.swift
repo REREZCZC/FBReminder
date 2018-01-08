@@ -42,7 +42,10 @@ class FBNewslineTableViewCell: UITableViewCell {
         
         shortTitle.textAlignment = .left
         shortTitle.textColor = UIColor.orange
-        shortTitle.font = UIFont.systemFont(ofSize: 18)
+//        shortTitle.font = UIFont.systemFont(ofSize: 18)
+        shortTitle.font = UIFont.init(name: "DolbyGustan-Book", size: 18)
+//        shortTitle.font = UIFont.fontNames(forFamilyName: "DolbyGustan-Light")
+        
         self.addSubview(shortTitle)
         shortTitle.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(self.snp.left).offset(20)

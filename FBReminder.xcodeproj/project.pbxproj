@@ -21,6 +21,7 @@
 		4CEAEF1B1FF2316B0074A2A6 /* FBNewsLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEAEF1A1FF2316B0074A2A6 /* FBNewsLineViewModel.swift */; };
 		AB2346E120033D2A009811F4 /* FBNewslineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2346E020033D2A009811F4 /* FBNewslineModel.swift */; };
 		AB2346E320034849009811F4 /* FBNewslineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2346E220034849009811F4 /* FBNewslineTableViewCell.swift */; };
+		AB2346EE200373DE009811F4 /* DolbyGustan-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB2346E9200373DE009811F4 /* DolbyGustan-Book.ttf */; };
 		AB68E0EB1FB9636700812C57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB68E0EA1FB9636700812C57 /* Assets.xcassets */; };
 		DEEAFBEA81E872A2965EA98C /* Pods_FBReminder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD4EE22F91D2D04A8BD7F6A /* Pods_FBReminder.framework */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		4CEAEF1A1FF2316B0074A2A6 /* FBNewsLineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBNewsLineViewModel.swift; sourceTree = "<group>"; };
 		AB2346E020033D2A009811F4 /* FBNewslineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBNewslineModel.swift; sourceTree = "<group>"; };
 		AB2346E220034849009811F4 /* FBNewslineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBNewslineTableViewCell.swift; sourceTree = "<group>"; };
+		AB2346E9200373DE009811F4 /* DolbyGustan-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DolbyGustan-Book.ttf"; sourceTree = "<group>"; };
 		AB68E0EA1FB9636700812C57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CCD4EE22F91D2D04A8BD7F6A /* Pods_FBReminder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FBReminder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC3FBA9F182D9F7EC507E2A /* Pods-FBReminder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FBReminder.release.xcconfig"; path = "Pods/Target Support Files/Pods-FBReminder/Pods-FBReminder.release.xcconfig"; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		4C67E8581F8DF5910062811D /* FBReminder */ = {
 			isa = PBXGroup;
 			children = (
+				AB2346E4200373AD009811F4 /* Resources */,
 				4C4AB2401F9847F6009EF9D3 /* Other */,
 				4C4AB23F1F9847E2009EF9D3 /* Models */,
 				4C4AB23E1F9847D4009EF9D3 /* View */,
@@ -150,6 +153,14 @@
 				4C67E8651F8DF5910062811D /* Info.plist */,
 			);
 			path = FBReminder;
+			sourceTree = "<group>";
+		};
+		AB2346E4200373AD009811F4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AB2346E9200373DE009811F4 /* DolbyGustan-Book.ttf */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,6 +227,7 @@
 			files = (
 				4C67E8641F8DF5910062811D /* LaunchScreen.storyboard in Resources */,
 				AB68E0EB1FB9636700812C57 /* Assets.xcassets in Resources */,
+				AB2346EE200373DE009811F4 /* DolbyGustan-Book.ttf in Resources */,
 				4C67E85F1F8DF5910062811D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
