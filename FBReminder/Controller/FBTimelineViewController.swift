@@ -108,8 +108,8 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
         
         newsLineVC.delegate = self
         newsLineVC.dataSource = self
-        
-        newsLineVC.register(UITableViewCell.self, forCellReuseIdentifier: kNewsLineCellID)
+        newsLineVC.separatorStyle = UITableViewCellSeparatorStyle.none
+        newsLineVC.register(FBNewslineTableViewCell.self, forCellReuseIdentifier: kNewsLineCellID)
         
         return newsLineVC
     }()
@@ -125,7 +125,8 @@ class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICo
         setupUI()
         //设置约束
         updateContent()
-        //请求加载数据
+        
+        //请求加载数据: Timeline / Newsline
         loadTimelineData()
         loadNewslineData()
     }
@@ -250,14 +251,16 @@ extension FBTimelineViewController {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return newsLineVM.newslineModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: kNewsLineCellID, for: indexPath) 
-        cell.backgroundColor = UIColor.lightGray;
-        
+        let cell : FBNewslineTableViewCell = tableView.dequeueReusableCell(withIdentifier: kNewsLineCellID, for: indexPath) as! FBNewslineTableViewCell
+        cell.cellModel = newsLineVM.newslineModels[indexPath.item]
         return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 
 }
