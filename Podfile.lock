@@ -2,7 +2,7 @@ PODS:
   - Alamofire (4.5.1)
   - Kingfisher (4.1.1)
   - MJExtension (3.0.13)
-  - PullToRefreshKit (0.7.0)
+  - PullToRefreshKit (0.8.2)
   - SnapKit (4.0.0)
   - SwiftyJSON (4.0.0)
 
@@ -18,7 +18,7 @@ SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Kingfisher: 6793a473357b5dbee42b0068ef203fe8325f259e
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
-  PullToRefreshKit: 8a1de4451090e30094f266393cb4642d4a47d899
+  PullToRefreshKit: 0a2a019bf094b8beba18c8a1bedfb1fb67ee70fd
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 

@@ -8,6 +8,36 @@
 
 import Foundation
 import UIKit
+
+@objc public protocol RefreshableFooter:class{
+    /**
+     footer的高度
+     */
+    func heightForFooter()->CGFloat
+    /**
+     不需要下拉加载更多的回调
+     */
+    func didUpdateToNoMoreData()
+    /**
+     重新设置到常态的回调
+     */
+    func didResetToDefault()
+    /**
+     结束刷新的回调
+     */
+    func didEndRefreshing()
+    /**
+     已经开始执行刷新逻辑，在一次刷新中，只会调用一次
+     */
+    func didBeginRefreshing()
+    
+    /**
+     当Scroll触发刷新，这个方法返回是否需要刷新（比如你只想要点击刷新）
+     */
+    func shouldBeginRefreshingWhenScroll()->Bool
+}
+
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -46,12 +76,12 @@ public enum RefreshMode{
     case scrollAndTap
 }
 
-open class DefaultRefreshFooter:UIView, RefreshableFooter, Tintable{
-    open let spinner:UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-    open  let textLabel:UILabel = UILabel(frame: CGRect(x: 0,y: 0,width: 140,height: 40)).SetUp {
-        $0.font = UIFont.systemFont(ofSize: 14)
-        $0.textAlignment = .center
+open class DefaultRefreshFooter:UIView, RefreshableFooter{
+    open static func footer()-> DefaultRefreshFooter{
+        return DefaultRefreshFooter()
     }
+    open let spinner:UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    open  let textLabel:UILabel = UILabel(frame: CGRect(x: 0,y: 0,width: 140,height: 40))
     /// 触发刷新的模式
     open var refreshMode = RefreshMode.scrollAndTap{
         didSet{
@@ -59,6 +89,7 @@ open class DefaultRefreshFooter:UIView, RefreshableFooter, Tintable{
             udpateTextLabelWithMode(refreshMode)
         }
     }
+    
     fileprivate func udpateTextLabelWithMode(_ refreshMode:RefreshMode){
         switch refreshMode {
         case .scroll:
@@ -69,6 +100,7 @@ open class DefaultRefreshFooter:UIView, RefreshableFooter, Tintable{
             textLabel.text = textDic[.scrollAndTapToRefresh]
         }
     }
+    
     fileprivate var tap:UITapGestureRecognizer!
     fileprivate var textDic = [RefreshKitFooterText:String]()
     /**
@@ -82,13 +114,14 @@ open class DefaultRefreshFooter:UIView, RefreshableFooter, Tintable{
         super.init(frame: frame)
         addSubview(spinner)
         addSubview(textLabel)
-
         textDic[.pullToRefresh] = PullToRefreshKitFooterString.pullUpToRefresh
         textDic[.refreshing] = PullToRefreshKitFooterString.refreshing
         textDic[.noMoreData] = PullToRefreshKitFooterString.noMoreData
         textDic[.tapToRefresh] = PullToRefreshKitFooterString.tapToRefresh
         textDic[.scrollAndTapToRefresh] = PullToRefreshKitFooterString.scrollAndTapToRefresh
         udpateTextLabelWithMode(refreshMode)
+        textLabel.font = UIFont.systemFont(ofSize: 14)
+        textLabel.textAlignment = .center
         tap = UITapGestureRecognizer(target: self, action: #selector(DefaultRefreshFooter.catchTap(_:)))
         self.addGestureRecognizer(tap)
     }
@@ -102,13 +135,15 @@ open class DefaultRefreshFooter:UIView, RefreshableFooter, Tintable{
     }
     @objc func catchTap(_ tap:UITapGestureRecognizer){
         let scrollView = self.superview?.superview as? UIScrollView
-        scrollView?.beginFooterRefreshing()
+        scrollView?.switchRefreshFooter(to: .refreshing)
     }
+    
 // MARK: - Refreshable  -
-    open func heightForRefreshingState() -> CGFloat {
+    open func heightForFooter() -> CGFloat {
         return PullToRefreshKitConst.defaultFooterHeight
     }
     open func didBeginRefreshing() {
+        self.isUserInteractionEnabled = true
         textLabel.text = textDic[.refreshing];
         spinner.startAnimating()
     }
@@ -117,9 +152,11 @@ open class DefaultRefreshFooter:UIView, RefreshableFooter, Tintable{
         spinner.stopAnimating()
     }
     open func didUpdateToNoMoreData(){
+        self.isUserInteractionEnabled = false;
         textLabel.text = textDic[.noMoreData]
     }
     open func didResetToDefault() {
+        self.isUserInteractionEnabled = true
         udpateTextLabelWithMode(refreshMode)
     }
     open func shouldBeginRefreshingWhenScroll()->Bool {
@@ -147,11 +184,11 @@ open class DefaultRefreshFooter:UIView, RefreshableFooter, Tintable{
         }
         self.backgroundColor = UIColor.white
     }
-    
-    // MARK: Tintable
-    open func setThemeColor(themeColor: UIColor) {
-        textLabel.textColor = themeColor
-        spinner.color = themeColor
+    override open var tintColor: UIColor!{
+        didSet{
+            textLabel.textColor = tintColor
+            spinner.color = tintColor
+        }
     }
 }
 
@@ -167,7 +204,7 @@ class RefreshFooterContainer:UIView{
     var attachedScrollView:UIScrollView!
     weak var delegate:RefreshableFooter?
     fileprivate var _state:RefreshFooterState = .idle
-    var state:RefreshFooterState{
+    var state: RefreshFooterState{
         get{
             return _state
         }
@@ -194,7 +231,6 @@ class RefreshFooterContainer:UIView{
         commonInit()
     }
     func commonInit(){
-        self.isUserInteractionEnabled = true
         self.backgroundColor = UIColor.clear
         self.autoresizingMask = .flexibleWidth
     }
@@ -302,16 +338,13 @@ class RefreshFooterContainer:UIView{
     }
 // MARK: - KVO -
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        guard self.isUserInteractionEnabled else{
-            return;
-        }
-        if keyPath == PullToRefreshKitConst.KPathOffSet {
+        if keyPath == PullToRefreshKitConst.KPathOffSet && self.isUserInteractionEnabled{
             handleScrollOffSetChange(change)
         }
         guard !self.isHidden else{
             return;
         }
-        if keyPath == PullToRefreshKitConst.KPathPanState{
+        if keyPath == PullToRefreshKitConst.KPathPanState && self.isUserInteractionEnabled{
             handlePanStateChange(change)
         }
         if keyPath == PullToRefreshKitConst.KPathContentSize {
