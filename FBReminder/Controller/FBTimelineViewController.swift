@@ -16,7 +16,7 @@ private let kTimelineCellID = "kTimelineCellID"
 private let kNewsLineCellID = "kNewsLineCellID"
 private let kBoundsWidth = "self.view.bounds.width"
 private let kBoundsHeight = "self.view.bounds.height"
-
+private var newsItemCount : NSInteger = 0;
 
 fileprivate var timeLineItemArray : NSMutableArray = NSMutableArray()
 //查询所有日历事件后的标题数组, 用于区别已经添加的事件
@@ -158,13 +158,22 @@ extension FBTimelineViewController {
         //添加 newsLine
         baseScrollowView.addSubview(newsLineVC)
         
-        //添加上拉刷新
+        //Timeline 上拉刷新
         timelineCVC.setUpFooterRefresh {
             self.timelineVM.loadTimelineData(preDate: self.timelineVM.preDataBegin, finishedCallback: {
                 self.timelineCVC.endFooterRefreshing()
                 self.timelineCVC.reloadData()
             })
         }
+        //Newsline 上拉刷新
+        newsLineVC.setUpFooterRefresh {
+            newsItemCount += 20;
+            self.newsLineVM.loadNewsLineData(itemIndex: newsItemCount, finishedCallback: {
+                self.newsLineVC.endFooterRefreshing()
+                self.newsLineVC.reloadData()
+            })
+        }
+        
     }
     
     fileprivate func updateContent() {
@@ -201,7 +210,8 @@ extension FBTimelineViewController {
 //CollectionView代理方法
 extension FBTimelineViewController {
     
-    
+    //****************************** TimeLine ******************************
+    //****************************** TimeLine ******************************
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return timelineVM.timelineModels.count
     }
@@ -249,7 +259,8 @@ extension FBTimelineViewController {
         }
     }
     
-    
+    //****************************** News ******************************
+    //****************************** News ******************************
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return newsLineVM.newslineModels.count
     }
@@ -261,6 +272,9 @@ extension FBTimelineViewController {
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(newsLineVM.newslineModels[indexPath.item].shortTitle)
     }
 
 }
@@ -405,7 +419,10 @@ extension FBTimelineViewController {
     }
     
     fileprivate func loadNewslineData() {
-        newsLineVM.loadNewsLineData {
+//        newsLineVM.loadNewsLineData {
+//            self.newsLineVC.reloadData()
+//        }
+        newsLineVM.loadNewsLineData(itemIndex: newsItemCount) {
             self.newsLineVC.reloadData()
         }
     }

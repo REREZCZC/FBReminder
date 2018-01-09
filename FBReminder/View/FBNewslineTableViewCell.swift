@@ -11,7 +11,7 @@ import SnapKit
 import Kingfisher
 
 class FBNewslineTableViewCell: UITableViewCell {
-
+    fileprivate let teamFilter : String = "阿森纳"
     fileprivate lazy var shortTitle : UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     fileprivate lazy var separatorLine : UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
@@ -28,7 +28,7 @@ class FBNewslineTableViewCell: UITableViewCell {
     var cellModel : FBNewsLineModel? {
         didSet {
             shortTitle.text = cellModel?.shortTitle
-            if (shortTitle.text?.contains("阿森纳"))! {
+            if (shortTitle.text?.contains(teamFilter))! {
                 shortTitle.textColor = UIColor.red
             }else {
                 shortTitle.textColor = UIColor.orange
@@ -37,13 +37,13 @@ class FBNewslineTableViewCell: UITableViewCell {
     }
     
     fileprivate func setupUI() {
-        separatorLine.backgroundColor = UIColor.lightGray
+        separatorLine.backgroundColor = UIColor.red
         self.addSubview(separatorLine)
         separatorLine.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(self.snp.left).offset(20)
             make.right.equalTo(self.snp.right).offset(-20)
             make.bottom.equalTo(self.snp.bottom)
-            make.height.equalTo(0.5)
+            make.height.equalTo(0.4)
         }
         
         shortTitle.textAlignment = .left
