@@ -22,6 +22,8 @@ fileprivate var timeLineItemArray : NSMutableArray = NSMutableArray()
 //查询所有日历事件后的标题数组, 用于区别已经添加的事件
 fileprivate var localCalenderEventArray : NSMutableArray = NSMutableArray()
 
+fileprivate var currentNewsCount : NSInteger = 0;
+
 class FBTimelineViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource {
     
     var savedEventId : String = ""
@@ -169,8 +171,14 @@ extension FBTimelineViewController {
         newsLineVC.setUpFooterRefresh {
             newsItemCount += 20;
             self.newsLineVM.loadNewsLineData(itemIndex: newsItemCount, finishedCallback: {
-                self.newsLineVC.endFooterRefreshing()
-                self.newsLineVC.reloadData()
+                
+                if self.newsLineVM.newslineModels.count > currentNewsCount {
+                    currentNewsCount = self.newsLineVM.newslineModels.count;
+                    self.newsLineVC.endFooterRefreshing()
+                    self.newsLineVC.reloadData()
+                }else {
+                    self.newsLineVC.endFooterRefreshing()
+                }
             })
         }
         
@@ -268,6 +276,7 @@ extension FBTimelineViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : FBNewslineTableViewCell = tableView.dequeueReusableCell(withIdentifier: kNewsLineCellID, for: indexPath) as! FBNewslineTableViewCell
         cell.cellModel = newsLineVM.newslineModels[indexPath.item]
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

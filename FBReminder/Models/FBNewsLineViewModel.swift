@@ -29,23 +29,28 @@ class FBNewsLineViewModel {
             let result = JSON(result)["result"]
             let news = result["data"]["feed"]["data"]
             print(news[5])
-            for i in 0...news.count - 1 {
-                
-                if news[i]["open_type"] == "text" {
-                    let shortTitle = news[i]["short_title"]//标题
-                    let detailUrl = news[i]["url"]//详情页
-                    let imageUrl = news[i]["image"]//封面
+            if news.count > 1 {
+                for i in 0...news.count - 1 {
                     
-                    let itemDic : FBNewsLineModel = FBNewsLineModel()
-                    itemDic.detailUrl = String(describing: detailUrl)
-                    itemDic.imageUrl = String(describing: imageUrl)
-                    itemDic.shortTitle = String(describing: shortTitle)
+                    if news[i]["open_type"] == "text" {
+                        let shortTitle = news[i]["short_title"]//标题
+                        let detailUrl = news[i]["url"]//详情页
+                        let imageUrl = news[i]["image"]//封面
+                        
+                        let itemDic : FBNewsLineModel = FBNewsLineModel()
+                        itemDic.detailUrl = String(describing: detailUrl)
+                        itemDic.imageUrl = String(describing: imageUrl)
+                        itemDic.shortTitle = String(describing: shortTitle)
+                        
+                        self.newslineModels.append(itemDic)
+                    }
                     
-                    self.newslineModels.append(itemDic)
+                    finishedCallback()
                 }
-                
-                finishedCallback()
+            }else {
+                //disable refresh
             }
+            
         }
     }
 }
