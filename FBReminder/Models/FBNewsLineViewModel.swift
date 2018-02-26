@@ -24,11 +24,11 @@ class FBNewsLineViewModel {
         var requestUrl : String = String()
         let subString = String.localizedStringWithFormat("%d", itemIndex)
         requestUrl = news + subString
-        print("requestURL: ",requestUrl)
+//        print("requestURL: ",requestUrl)
         NetworkTool.requestData(URLString: requestUrl, type: .get) { (result: Any) in
             let result = JSON(result)["result"]
             let news = result["data"]["feed"]["data"]
-            print(news[5])
+//            print(news[5])
             if news.count > 1 {
                 for i in 0...news.count - 1 {
                     

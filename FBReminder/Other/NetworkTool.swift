@@ -23,7 +23,7 @@ class NetworkTool {
             
             guard let result = response.result.value else{
                 print("********ERROR*******")
-                print(response.result.error ?? "")
+//                print(response.result.error ?? "")
                 return
             }
             

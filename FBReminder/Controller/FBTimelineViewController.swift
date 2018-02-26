@@ -11,6 +11,7 @@ import SwiftyJSON
 import PullToRefreshKit
 import EventKit
 import SnapKit
+import WebKit
 
 private let kTimelineCellID = "kTimelineCellID"
 private let kNewsLineCellID = "kNewsLineCellID"
@@ -284,6 +285,14 @@ extension FBTimelineViewController {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(newsLineVM.newslineModels[indexPath.item].shortTitle)
+        print(newsLineVM.newslineModels[indexPath.item].detailUrl)
+        
+        let newsDetailVC : FBNewsDetailViewController = FBNewsDetailViewController()
+        newsDetailVC.detailUrl = newsLineVM.newslineModels[indexPath.item].detailUrl
+        
+        self.present(newsDetailVC, animated: true) {
+            print("success")
+        }
     }
 
 }

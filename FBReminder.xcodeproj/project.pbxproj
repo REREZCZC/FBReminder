@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C06C0042043F4C100BE203D /* FBNewsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C06C0032043F4C100BE203D /* FBNewsDetailViewController.swift */; };
 		4C24B9F21F95A8B90085D40A /* NetworkTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24B9F11F95A8B90085D40A /* NetworkTool.swift */; };
 		4C24B9F41F95F8F90085D40A /* FBTimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24B9F31F95F8F90085D40A /* FBTimelineViewModel.swift */; };
 		4C24B9F81F95FE6B0085D40A /* FBTimelineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24B9F71F95FE6B0085D40A /* FBTimelineModel.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		149B727BE6A9D0DCF7BE1719 /* Pods-FBReminder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FBReminder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FBReminder/Pods-FBReminder.debug.xcconfig"; sourceTree = "<group>"; };
+		4C06C0032043F4C100BE203D /* FBNewsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBNewsDetailViewController.swift; sourceTree = "<group>"; };
 		4C24B9F11F95A8B90085D40A /* NetworkTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTool.swift; sourceTree = "<group>"; };
 		4C24B9F31F95F8F90085D40A /* FBTimelineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBTimelineViewModel.swift; sourceTree = "<group>"; };
 		4C24B9F71F95FE6B0085D40A /* FBTimelineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBTimelineModel.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				4C67E86F1F8DFB250062811D /* FBTimelineViewController.swift */,
+				4C06C0032043F4C100BE203D /* FBNewsDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 				TargetAttributes = {
 					4C67E8551F8DF5910062811D = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -303,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C06C0042043F4C100BE203D /* FBNewsDetailViewController.swift in Sources */,
 				4C24B9F41F95F8F90085D40A /* FBTimelineViewModel.swift in Sources */,
 				4CB7A0391FAC76C400ECC3A3 /* FBSegmentBar.swift in Sources */,
 				4C24B9F21F95A8B90085D40A /* NetworkTool.swift in Sources */,
@@ -452,6 +457,7 @@
 			baseConfigurationReference = 149B727BE6A9D0DCF7BE1719 /* Pods-FBReminder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GQ6K79WX2K;
@@ -460,6 +466,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = renzhicheng.FBReminder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -470,6 +478,7 @@
 			baseConfigurationReference = DFC3FBA9F182D9F7EC507E2A /* Pods-FBReminder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GQ6K79WX2K;
@@ -478,6 +487,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = renzhicheng.FBReminder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
