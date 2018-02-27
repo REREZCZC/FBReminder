@@ -12,6 +12,9 @@
 		4C24B9F41F95F8F90085D40A /* FBTimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24B9F31F95F8F90085D40A /* FBTimelineViewModel.swift */; };
 		4C24B9F81F95FE6B0085D40A /* FBTimelineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24B9F71F95FE6B0085D40A /* FBTimelineModel.swift */; };
 		4C24B9FA1F9600030085D40A /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24B9F91F9600030085D40A /* BaseModel.swift */; };
+		4C5B30DA2045071400E24ED9 /* CardAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5B30D72045071300E24ED9 /* CardAnimationController.swift */; };
+		4C5B30DB2045071400E24ED9 /* CardPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5B30D82045071300E24ED9 /* CardPresentationController.swift */; };
+		4C5B30DC2045071400E24ED9 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5B30D92045071300E24ED9 /* CardViewController.swift */; };
 		4C67E85A1F8DF5910062811D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C67E8591F8DF5910062811D /* AppDelegate.swift */; };
 		4C67E85F1F8DF5910062811D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C67E85D1F8DF5910062811D /* Main.storyboard */; };
 		4C67E8641F8DF5910062811D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C67E8621F8DF5910062811D /* LaunchScreen.storyboard */; };
@@ -34,6 +37,9 @@
 		4C24B9F31F95F8F90085D40A /* FBTimelineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBTimelineViewModel.swift; sourceTree = "<group>"; };
 		4C24B9F71F95FE6B0085D40A /* FBTimelineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBTimelineModel.swift; sourceTree = "<group>"; };
 		4C24B9F91F9600030085D40A /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		4C5B30D72045071300E24ED9 /* CardAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardAnimationController.swift; sourceTree = "<group>"; };
+		4C5B30D82045071300E24ED9 /* CardPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPresentationController.swift; sourceTree = "<group>"; };
+		4C5B30D92045071300E24ED9 /* CardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		4C67E8561F8DF5910062811D /* FBReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C67E8591F8DF5910062811D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C67E85E1F8DF5910062811D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -86,6 +92,7 @@
 		4C4AB23D1F9847AB009EF9D3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4C5B30D62045070600E24ED9 /* CardViewController */,
 				4C67E86F1F8DFB250062811D /* FBTimelineViewController.swift */,
 				4C06C0032043F4C100BE203D /* FBNewsDetailViewController.swift */,
 			);
@@ -122,6 +129,16 @@
 				4CE9A6A01F9F12C200D0B162 /* FBDateBase.swift */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		4C5B30D62045070600E24ED9 /* CardViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4C5B30D72045071300E24ED9 /* CardAnimationController.swift */,
+				4C5B30D82045071300E24ED9 /* CardPresentationController.swift */,
+				4C5B30D92045071300E24ED9 /* CardViewController.swift */,
+			);
+			path = CardViewController;
 			sourceTree = "<group>";
 		};
 		4C67E84D1F8DF5910062811D = {
@@ -317,7 +334,10 @@
 				4CEAEF1B1FF2316B0074A2A6 /* FBNewsLineViewModel.swift in Sources */,
 				4C67E8701F8DFB250062811D /* FBTimelineViewController.swift in Sources */,
 				AB2346E320034849009811F4 /* FBNewslineTableViewCell.swift in Sources */,
+				4C5B30DA2045071400E24ED9 /* CardAnimationController.swift in Sources */,
 				AB2346E120033D2A009811F4 /* FBNewslineModel.swift in Sources */,
+				4C5B30DC2045071400E24ED9 /* CardViewController.swift in Sources */,
+				4C5B30DB2045071400E24ED9 /* CardPresentationController.swift in Sources */,
 				4C24B9F81F95FE6B0085D40A /* FBTimelineModel.swift in Sources */,
 				4C67E8721F8E0D040062811D /* FBTimelineCollectionViewCell.swift in Sources */,
 			);

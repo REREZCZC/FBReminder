@@ -287,9 +287,10 @@ extension FBTimelineViewController {
         print(newsLineVM.newslineModels[indexPath.item].shortTitle)
         print(newsLineVM.newslineModels[indexPath.item].detailUrl)
         
-        let newsDetailVC : FBNewsDetailViewController = FBNewsDetailViewController()
-        newsDetailVC.detailUrl = newsLineVM.newslineModels[indexPath.item].detailUrl
+
         
+        let newsDetailVC : CardViewController = CardViewController();
+        newsDetailVC.detailUrl = newsLineVM.newslineModels[indexPath.item].detailUrl
         self.present(newsDetailVC, animated: true) {
             print("success")
         }

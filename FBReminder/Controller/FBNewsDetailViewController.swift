@@ -16,7 +16,7 @@ class FBNewsDetailViewController: UIViewController {
         super.viewDidLoad()
         
         let webView : WKWebView = {
-            let web = WKWebView( frame: CGRect(x:0, y:64,width:self.view.frame.size.width, height:self.view.frame.size.height))
+            let web = WKWebView( frame: CGRect(x:0, y:0,width:self.view.frame.size.width, height:self.view.frame.size.height))
             /// 设置访问的URL
             let url = NSURL(string: detailUrl)
             /// 根据URL创建请求
@@ -31,6 +31,7 @@ class FBNewsDetailViewController: UIViewController {
         }()
         
         self.view.addSubview(webView)
+        
     }
 
 
